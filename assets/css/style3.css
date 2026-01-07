@@ -331,4 +331,9 @@ img {
 
 }
 
+@media (max-width: 768px) {
+  body {
+    background: red !important;
+  }
+}
 
