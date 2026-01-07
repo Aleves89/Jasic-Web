@@ -1,0 +1,300 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+/* COMMON */
+.container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 0 40px;
+}
+
+/* HEADER */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  background: #000;
+  z-index: 1000;
+}
+
+.header-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 36px;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 30px;
+  font-size: 15px;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  height: 100vh;
+  background: url("../img/fondo.png") center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  padding-top: 80px;
+}
+
+/* .hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0.85),
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.15)
+  );
+} */
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding-left: 80px;
+}
+
+.hero h1 {
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.hero p {
+  margin-top: 30px;
+  font-size: 16px;
+  max-width: 480px;
+}
+
+.btn-primary {
+  display: inline-block;
+  margin-top: 40px;
+  background: #c8102e;
+  color: #fff;
+  padding: 16px 34px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* PRODUCTS */
+/* Contenedor de categorías de productos */
+.product-categories {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px; /* espacio entre cada ícono */
+  padding: 40px 20px; /* espacio superior/inferior */
+  background-color: #000; /* como en JASIC */
+  color: #fff;
+  text-align: center;
+}
+
+.product-categories h2 {
+  width: 100%;
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+}
+
+/* Cada categoría */
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 120px; /* ancho máximo de cada ícono + texto */
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.product-item img {
+  width: 80px;  /* tamaño del ícono */
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.product-item button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.product-item button:hover {
+  background: #fff;
+  color: #000;
+}
+
+.product-item:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-item {
+    max-width: 90px;
+  }
+
+  .product-item img {
+    width: 60px;
+  }
+
+  .product-categories h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* ===================== */
+/* Carrusel - Home Carousel */
+/* ===================== */
+.home-carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 60px 0;
+}
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  transition: transform 0.6s ease;
+  will-change: transform;
+}
+
+.carousel-slide {
+  flex: 0 0 320px; /* más grande, como JASIC */
+  margin: 0 25px;
+  opacity: 0.4;
+  transform: scale(0.85);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+
+
+/* ===================== */
+/* Sección Catálogos / Videos */
+/* ===================== */
+.home-extra {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.extra-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap; /* responsive */
+}
+
+.extra-box {
+  flex: 1 1 48%; /* ocupa casi la mitad de la fila */
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.extra-box h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.extra-box p {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* Lista de catálogos */
+.catalog-list {
+  list-style: none;
+  padding: 0;
+}
+
+.catalog-list li {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.catalog-list a {
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.catalog-list a:hover {
+  color: #005fa3;
+  text-decoration: underline;
+}
+
+/* Videos */
+
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.video-item iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  border: none;
+}
+
+.video-item.coming-soon {
+  height: 200px;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.03);
+}
