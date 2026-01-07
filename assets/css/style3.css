@@ -331,12 +331,5 @@ img {
 
 }
 
-@media (max-width: 768px) {
-  body {
-    background: red !important;
-  }
-}
-body {
-  border: 10px solid lime !important;
-}
+
 
