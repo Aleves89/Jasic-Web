@@ -1,0 +1,265 @@
+/* ===================== */
+/* PRODUCTO - BASE */
+/* ===================== */
+
+.products-page,
+.product-hero,
+.product-description,
+.product-gallery,
+.product-features,
+.product-downloads,
+.product-videos {
+  background-color: #000;
+  color: #fff;
+}
+
+/* ===================== */
+/* HERO DEL PRODUCTO */
+/* ===================== */
+
+.product-hero {
+  padding: 80px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.product-hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.product-hero-image img {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.product-hero-info h1 {
+  font-size: 2.6rem;
+  margin-bottom: 15px;
+}
+
+.product-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 25px;
+}
+
+.product-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.product-tags span {
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #111;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ===================== */
+/* DESCRIPCIÓN */
+/* ===================== */
+
+.product-description {
+  padding: 70px 0;
+}
+
+.product-description h2 {
+  font-size: 1.9rem;
+  margin-bottom: 20px;
+}
+
+.product-description p {
+  max-width: 800px;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.8);
+}
+
+/* ===================== */
+/* GALERÍA */
+/* ===================== */
+
+.product-gallery {
+  padding: 70px 0;
+  background: #0b0b0b;
+}
+
+.product-gallery h2 {
+  font-size: 1.9rem;
+  margin-bottom: 30px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  background: #111;
+}
+
+/* ===================== */
+/* CARACTERÍSTICAS */
+/* ===================== */
+
+.product-features {
+  padding: 70px 0;
+}
+
+.product-features h2 {
+  font-size: 1.9rem;
+  margin-bottom: 30px;
+}
+
+.features-list {
+  list-style: none;
+  max-width: 600px;
+}
+
+.features-list li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 15px;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.features-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #d40000;
+  font-weight: bold;
+}
+
+/* ===================== */
+/* DESCARGAS */
+/* ===================== */
+
+.product-downloads {
+  padding: 70px 0;
+  background: #0b0b0b;
+}
+
+.product-downloads h2 {
+  font-size: 1.9rem;
+  margin-bottom: 30px;
+}
+
+.downloads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.download-card {
+  display: block;
+  padding: 25px;
+  background: #111;
+  border-radius: 16px;
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.download-card:hover {
+  background: #161616;
+  transform: translateY(-5px);
+}
+
+/* ===================== */
+/* VIDEOS */
+/* ===================== */
+
+.product-videos {
+  padding: 70px 0;
+}
+
+.product-videos h2 {
+  font-size: 1.9rem;
+  margin-bottom: 30px;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.video-item iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 14px;
+  border: none;
+}
+
+.video-item.coming-soon {
+  height: 200px;
+  border: 2px dashed rgba(255,255,255,0.35);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.7);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(255,255,255,0.04);
+}
+
+/* ===================== */
+/* RESPONSIVE */
+/* ===================== */
+
+@media (max-width: 900px) {
+
+  .product-hero-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .product-hero-image img {
+    max-width: 320px;
+  }
+
+  .product-tags {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .product-hero {
+    padding: 60px 0;
+  }
+
+  .product-hero-info h1 {
+    font-size: 2rem;
+  }
+
+  .product-description h2,
+  .product-gallery h2,
+  .product-features h2,
+  .product-downloads h2,
+  .product-videos h2 {
+    font-size: 1.6rem;
+  }
+
+  .gallery-grid img {
+    height: 180px;
+  }
+}
