@@ -8,7 +8,8 @@
 .product-gallery,
 .product-features,
 .product-downloads,
-.product-videos {
+.product-videos,
+.product-cta {
   background-color: #000;
   color: #fff;
 }
@@ -27,12 +28,14 @@
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
+
 }
 
 .product-hero-image img {
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
+  
 }
 
 .product-hero-info h1 {
@@ -176,8 +179,9 @@
 }
 
 .download-card:hover {
-  background: #161616;
-  transform: translateY(-5px);
+ background: linear-gradient(145deg, #161616 0%, #2a0f0f 100%);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(212,0,0,0.5);
 }
 
 /* ===================== */
@@ -222,6 +226,49 @@
 }
 
 /* ===================== */
+/* CTA */
+/* ===================== */
+
+.product-cta {
+  padding: 90px 0;
+  background: linear-gradient(135deg, #0b0b0b, #000);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.cta-container {
+  text-align: center;
+  max-width: 800px;
+}
+
+.product-cta h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+.product-cta p {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 35px;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 14px 36px;
+  background: #d40000;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 40px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #ff1a1a;
+  transform: translateY(-3px);
+}
+
+/* ===================== */
 /* RESPONSIVE */
 /* ===================== */
 
@@ -239,6 +286,10 @@
   .product-tags {
     justify-content: center;
   }
+
+  .cta-container {
+    padding: 0 20px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -255,11 +306,89 @@
   .product-gallery h2,
   .product-features h2,
   .product-downloads h2,
-  .product-videos h2 {
+  .product-videos h2,
+  .product-cta h2 {
     font-size: 1.6rem;
   }
 
   .gallery-grid img {
     height: 180px;
+  }
+
+  .product-cta {
+    padding: 70px 0;
+  }
+
+  .product-cta p {
+    font-size: 1rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+.btn-product {
+  background: #ff6600; /* naranja más suave */
+}
+
+.btn-product:hover {
+  background: #ff4c00;
+}
+
+.product-tags span {
+  background: #1a0d00; /* más cálido que negro puro */
+  border-color: rgba(255,102,0,0.3);
+}
+
+
+/* ===================== */
+/* FONDO HERO, GALERÍA, FEATURES, DESCRIPCIÓN - Mosaico */
+/* ===================== */
+
+.product-hero,
+.product-gallery,
+.product-features,
+.product-description {
+  background-image: url("../img/fondoproducto.png");
+  background-repeat: repeat;          /* se repite como mosaico */
+  background-position: top left;      /* empieza desde la esquina superior izquierda */
+  background-size: 1000px 1000px;       /* tamaño de cada tile, ajusta según necesites */
+  position: relative;
+  color: #fff;
+  padding: 80px 0;
+}
+
+
+/* Overlay semitransparente opcional para que el texto se lea */
+.product-hero::before,
+.product-gallery::before,
+.product-features::before,
+.product-description::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.87); /* ajusta opacidad si quieres más o menos contraste */
+  z-index: 0;
+}
+
+/* Contenido por encima del overlay */
+.product-hero *,
+.product-gallery *,
+.product-features *,
+.product-description * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-hero,
+  .product-gallery,
+  .product-features,
+  .product-description {
+    padding: 60px 20px;
+    background-size: 150px 150px; /* tiles más pequeños en móviles */
   }
 }

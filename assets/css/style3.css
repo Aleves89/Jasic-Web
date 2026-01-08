@@ -191,7 +191,8 @@ img {
 }
 
 .carousel-slide img {
-  height: 260px;
+  height: 257px;
+  width: 1707px;
   object-fit: cover;
   border-radius: 16px;
 }
@@ -297,6 +298,8 @@ img {
   }
 }
 
+/* Responsive */
+
 @media (max-width: 768px) {
 
   .header-container {
@@ -331,5 +334,75 @@ img {
 
 }
 
+/* ===================== */
+/* RESPONSIVE - MOBILE */
+/* ===================== */
+
+@media (max-width: 768px) {
+
+  /* ---------- HERO ---------- */
+
+  .hero {
+    height: 65vh;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+    margin: 15px 0;
+  }
+
+  .btn-primary {
+    padding: 12px 24px;
+    font-size: 0.95rem;
+  }
+
+  /* ---------- PRODUCTOS ---------- */
+
+  .product-categories {
+    padding: 40px 20px;
+  }
+
+  .product-categories h2 {
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .product-categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .product-item img {
+    max-width: 80px;
+  }
+
+  .product-item button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
 
 
+@media (max-width: 480px) {
+
+  .product-categories {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-content h1 {
+    font-size: 1.7rem;
+  }
+}
