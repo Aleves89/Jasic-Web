@@ -1,0 +1,173 @@
+/* ===================== */
+/* SOPORTE - BASE */
+/* ===================== */
+
+.support-hero,
+.support-section,
+.support-cta {
+  background-color: #000;
+  color: #fff;
+}
+
+/* ===================== */
+/* HERO */
+/* ===================== */
+
+.support-hero {
+  padding: 90px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+}
+
+.support-hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+
+.support-hero p {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ===================== */
+/* SECCIÓN PRINCIPAL */
+/* ===================== */
+
+.support-section {
+  padding: 80px 0;
+}
+
+.support-section.dark {
+  background: #0b0b0b;
+}
+
+.support-section h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+/* ===================== */
+/* GRID SOPORTE */
+/* ===================== */
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.support-card {
+  background: #111;
+  padding: 35px 25px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.support-card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.support-card p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 25px;
+}
+
+.support-link {
+  color: #d40000;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.support-link:hover {
+  text-decoration: underline;
+}
+
+/* ===================== */
+/* FAQ */
+/* ===================== */
+
+.faq-list {
+  max-width: 900px;
+}
+
+.faq-item {
+  background: #111;
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  margin-bottom: 20px;
+}
+
+.faq-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.faq-item p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ===================== */
+/* CTA */
+/* ===================== */
+
+.support-cta {
+  padding: 90px 0;
+  text-align: center;
+  background: linear-gradient(135deg, #0b0b0b, #000);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.support-cta h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+.support-cta p {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 30px;
+}
+
+/* usa .btn-primary del css base */
+
+/* ===================== */
+/* RESPONSIVE */
+/* ===================== */
+
+@media (max-width: 1000px) {
+  .support-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .support-hero {
+    padding: 70px 0;
+  }
+
+  .support-hero h1 {
+    font-size: 2.1rem;
+  }
+
+  .support-section {
+    padding: 60px 0;
+  }
+
+  .support-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .support-cta h2 {
+    font-size: 1.8rem;
+  }
+}

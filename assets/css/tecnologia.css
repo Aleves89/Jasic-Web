@@ -1,0 +1,189 @@
+/* ===================== */
+/* TECNOLOGIA - BASE */
+/* ===================== */
+
+.tech-hero,
+.tech-section,
+.tech-cta {
+  background-color: #000;
+  color: #fff;
+}
+
+/* ===================== */
+/* HERO */
+/* ===================== */
+
+.tech-hero {
+  padding: 90px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+}
+
+.tech-hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+
+.tech-hero p {
+  max-width: 750px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ===================== */
+/* SECCIONES */
+/* ===================== */
+
+.tech-section {
+  padding: 80px 0;
+}
+
+.tech-section.dark {
+  background: #0b0b0b;
+}
+
+.tech-section h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.tech-section .center {
+  text-align: center;
+}
+
+/* ===================== */
+/* GRID PRINCIPAL */
+/* ===================== */
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.tech-image img {
+  width: 100%;
+  border-radius: 18px;
+  background: #111;
+}
+
+/* ===================== */
+/* TARJETAS TECNOLÓGICAS */
+/* ===================== */
+
+.tech-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.tech-card {
+  background: #111;
+  padding: 35px 25px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.tech-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.tech-card p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.75);
+}
+
+/* ===================== */
+/* LISTA PROCESOS */
+/* ===================== */
+
+.tech-list {
+  list-style: none;
+  max-width: 500px;
+}
+
+.tech-list li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 14px;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.tech-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #d40000;
+  font-weight: bold;
+}
+
+/* ===================== */
+/* CTA */
+/* ===================== */
+
+.tech-cta {
+  padding: 90px 0;
+  text-align: center;
+  background: linear-gradient(135deg, #0b0b0b, #000);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.tech-cta h2 {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+}
+
+/* usa .btn-primary del css base */
+
+/* ===================== */
+/* RESPONSIVE */
+/* ===================== */
+
+@media (max-width: 900px) {
+
+  .tech-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .tech-image img {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .tech-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .tech-hero {
+    padding: 70px 0;
+  }
+
+  .tech-hero h1 {
+    font-size: 2.1rem;
+  }
+
+  .tech-section {
+    padding: 60px 0;
+  }
+
+  .tech-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .tech-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-cta h2 {
+    font-size: 1.8rem;
+  }
+}
