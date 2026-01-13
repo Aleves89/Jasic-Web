@@ -209,3 +209,36 @@
   }
 
 }
+
+/* ===================== */
+/* FILTROS PRODUCTOS */
+/* ===================== */
+
+.products-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 40px 0 50px;
+}
+
+.filter-btn {
+  padding: 10px 18px;
+  border-radius: 20px;
+  background: #111;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: #1a1a1a;
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: #d40000;
+  border-color: #d40000;
+}
