@@ -209,6 +209,127 @@ document.addEventListener('DOMContentLoaded', function() {
       elements.image.style.cursor = state.scale > 1 ? 'grab' : 'default';
     });
   }
+
+
+  // =====================
+// TOUCH EVENTS PARA MÓVIL
+// =====================
+function setupTouchEvents() {
+  let initialDistance = 0;
+  let initialScale = 1;
+  let lastTouchX = 0;
+  let lastTouchY = 0;
+  let isPinching = false;
+  
+  // TOUCHSTART - Iniciar interacción
+  elements.image.addEventListener('touchstart', function(e) {
+    if (!state.isOpen) return;
+    
+    e.preventDefault();
+    
+    if (e.touches.length === 2) {
+      // PINCH ZOOM (dos dedos)
+      isPinching = true;
+      initialScale = state.scale;
+      
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      initialDistance = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      );
+      
+      // Calcular centro entre los dos dedos
+      const centerX = (touch1.clientX + touch2.clientX) / 2;
+      const centerY = (touch1.clientY + touch2.clientY) / 2;
+      
+      // Guardar como último centro para zoom
+      lastTouchX = centerX;
+      lastTouchY = centerY;
+      
+    } else if (e.touches.length === 1 && state.scale > 1) {
+      // DRAG (un dedo, solo si hay zoom)
+      const touch = e.touches[0];
+      lastTouchX = touch.clientX;
+      lastTouchY = touch.clientY;
+    }
+    
+  }, { passive: false }); // IMPORTANTE: passive: false para poder usar preventDefault()
+  
+  // TOUCHMOVE - Manejar movimiento
+  elements.image.addEventListener('touchmove', function(e) {
+    if (!state.isOpen) return;
+    
+    e.preventDefault();
+    
+    if (e.touches.length === 2 && isPinching) {
+      // ZOOM CON PINCH
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const currentDistance = Math.hypot(
+        touch2.clientX - touch1.clientX,
+        touch2.clientY - touch1.clientY
+      );
+      
+      // Calcular nuevo scale basado en la distancia
+      if (initialDistance > 0) {
+        const scaleChange = currentDistance / initialDistance;
+        state.scale = Math.min(
+          Math.max(initialScale * scaleChange, CONFIG.minScale),
+          CONFIG.maxScale
+        );
+        
+        // Calcular centro actual
+        const centerX = (touch1.clientX + touch2.clientX) / 2;
+        const centerY = (touch1.clientY + touch2.clientY) / 2;
+        
+        // Ajustar posición para zoom hacia el centro
+        adjustPositionForZoom(centerX, centerY, scaleChange);
+        
+        lastTouchX = centerX;
+        lastTouchY = centerY;
+        
+        updateTransform();
+      }
+      
+    } else if (e.touches.length === 1 && state.scale > 1) {
+      // DRAG CON UN DEDO
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - lastTouchX;
+      const deltaY = touch.clientY - lastTouchY;
+      
+      state.posX += deltaX;
+      state.posY += deltaY;
+      
+      lastTouchX = touch.clientX;
+      lastTouchY = touch.clientY;
+      
+      updateTransform();
+    }
+    
+  }, { passive: false });
+  
+  // TOUCHEND - Finalizar interacción
+  elements.image.addEventListener('touchend', function(e) {
+    isPinching = false;
+    initialDistance = 0;
+  }, { passive: true });
+  
+  // Función auxiliar para ajustar posición durante zoom
+  function adjustPositionForZoom(centerX, centerY, scaleChange) {
+    const rect = elements.image.getBoundingClientRect();
+    
+    // Calcular posición relativa del centro en la imagen
+    const relativeX = (centerX - rect.left) / rect.width;
+    const relativeY = (centerY - rect.top) / rect.height;
+    
+    // Ajustar posición para mantener el punto bajo los dedos
+    state.posX = state.posX * scaleChange - (relativeX - 0.5) * rect.width * (scaleChange - 1);
+    state.posY = state.posY * scaleChange - (relativeY - 0.5) * rect.height * (scaleChange - 1);
+  }
+  
+  console.log('📱 Touch events configurados para móvil');
+}
   
   // =====================
   // INICIALIZACIÓN
