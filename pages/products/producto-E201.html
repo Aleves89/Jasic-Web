@@ -10,9 +10,57 @@
 
   <!-- CSS PRODUCTO -->
   <link rel="stylesheet" href="../../assets/css/producto.css">
+ <!-- CSS LIGHTBOX (con preload para mejor performance) -->
+  <link rel="preload" href="../../assets/css/productos.css" as="style" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="../../assets/css/productos.css"></noscript>
+  
+  <!-- Fallback si preload falla -->
+  <script>
+    // Si CSS no carga en 2 segundos, forzar carga
+    setTimeout(function() {
+      var links = document.querySelectorAll('link[rel="preload"]');
+      links.forEach(function(link) {
+        if (link.href.includes('productos.css') && link.rel === 'preload') {
+          link.rel = 'stylesheet';
+        }
+      });
+    }, 2000);
+  </script>
+
+  <style id="lightbox-backup">
+  /* ESTILOS DE EMERGENCIA PARA LIGHTBOX */
+  .lightbox.active { 
+    display: flex !important; 
+    background: #000 !important;
+  }
+  .lightbox-inner { 
+    z-index: 2 !important; 
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  #lightbox-img { 
+    max-width: 100% !important; 
+    max-height: 100% !important;
+  }
+</style>
+
 </head>
 
 <body>
+
+  <!-- LIGHTBOX CORREGIDO -->
+<div class="lightbox" id="lightbox">
+  <!-- OVERLAY para el fondo completo -->
+  <div class="lightbox-overlay"></div>
+  
+  <!-- Contenedor para la imagen -->
+  <div class="lightbox-inner">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" alt="">
+  </div>
+</div>
 
 <!-- ===================== -->
 <!-- HEADER -->
@@ -84,11 +132,11 @@
     <h2>Galería</h2>
 
     <div class="gallery-grid">
-      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-2-E201.jpg" alt="TIG 200 PRO">
-      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-3-E201.jpg" alt="TIG 200 PRO">
-      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-4-E201.jpg" alt="TIG 200 PRO">
-      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-5-E201.jpg" alt="TIG 200 PRO">
-      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-6-E201.jpg" alt="TIG 200 PRO">
+      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-2-E201.jpg" alt="TIG 200 PRO" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-3-E201.jpg" alt="TIG 200 PRO" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-4-E201.jpg" alt="TIG 200 PRO" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-5-E201.jpg" alt="TIG 200 PRO" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/TIG 200 AC-DC (E201)/PRO-TIG200AC-DC-6-E201.jpg" alt="TIG 200 PRO" class="lightbox-img">
     </div>
 
   </div>
@@ -175,6 +223,8 @@
     <p>&copy; 2026 JASIC Welding. Todos los derechos reservados.</p>
   </div>
 </footer>
+
+<script src="../../assets/js/lb.js"></script>
 
 </body>
 </html>

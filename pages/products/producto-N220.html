@@ -14,6 +14,18 @@
 
 <body>
 
+  <!-- LIGHTBOX CORREGIDO -->
+<div class="lightbox" id="lightbox">
+  <!-- OVERLAY para el fondo completo -->
+  <div class="lightbox-overlay"></div>
+  
+  <!-- Contenedor para la imagen -->
+  <div class="lightbox-inner">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" alt="">
+  </div>
+</div>
+
 <!-- ===================== -->
 <!-- HEADER -->
 <!-- ===================== -->
@@ -86,10 +98,10 @@
     <h2>Galería</h2>
 
     <div class="gallery-grid">
-      <img src="../../assets/img/Productos/PRO/MIG 200 (N220)/PRO-MIG200-2-N220.jpg" alt="PRO-MIG200">
-      <img src="../../assets/img/Productos/PRO/MIG 200 (N220)/PRO-MIG200-3-N220.jpg" alt="PRO-MIG200">
-      <img src="../../assets/img/Productos/PRO/MIG 200 (N220)/PRO-MIG200-4-N220.jpg" alt="PRO-MIG200">
-      <img src="../../assets/img/Productos/PRO/MIG 200 (N220)/PRO-MIG200-5-N220.jpg" alt="PRO-MIG200">
+      <img src="../../assets/img/Productos/PRO/MIG 200 (N220)/PRO-MIG200-2-N220.jpg" alt="PRO-MIG200" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/MIG 200 (N220)/PRO-MIG200-3-N220.jpg" alt="PRO-MIG200" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/MIG 200 (N220)/PRO-MIG200-4-N220.jpg" alt="PRO-MIG200" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/MIG 200 (N220)/PRO-MIG200-5-N220.jpg" alt="PRO-MIG200" class="lightbox-img">
     </div>
 
   </div>
@@ -176,6 +188,8 @@
     <p>&copy; 2026 JASIC Welding. Todos los derechos reservados.</p>
   </div>
 </footer>
+
+<script src="../../assets/js/lb.js"></script>
 
 </body>
 </html>

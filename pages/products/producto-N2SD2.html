@@ -14,6 +14,18 @@
 
 <body>
 
+  <!-- LIGHTBOX CORREGIDO -->
+<div class="lightbox" id="lightbox">
+  <!-- OVERLAY para el fondo completo -->
+  <div class="lightbox-overlay"></div>
+  
+  <!-- Contenedor para la imagen -->
+  <div class="lightbox-inner">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" alt="">
+  </div>
+</div>
+
 <!-- ===================== -->
 <!-- HEADER -->
 <!-- ===================== -->
@@ -84,11 +96,11 @@
     <h2>Galería</h2>
 
     <div class="gallery-grid">
-      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-2-N2SD2.JPG" alt="TIG 350C EVO20">
-      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-3-N2SD2.JPG" alt="TIG 350C EVO20">
-      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-4-N2SD2.JPG" alt="TIG 350C EVO20">
-      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-5-N2SD2.JPG" alt="TIG 350C EVO20">
-      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-6-N2SD2.JPG" alt="TIG 350C EVO20">
+      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-2-N2SD2.JPG" alt="TIG 350C EVO20" class="lightbox-img">
+      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-3-N2SD2.JPG" alt="TIG 350C EVO20" class="lightbox-img">
+      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-4-N2SD2.JPG" alt="TIG 350C EVO20" class="lightbox-img">
+      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-5-N2SD2.JPG" alt="TIG 350C EVO20" class="lightbox-img">
+      <img src="../../assets/img/Productos/EVO20/MIG350C (N2SD2)/MIG350-COMPACTA-EVO20-6-N2SD2.JPG" alt="TIG 350C EVO20" class="lightbox-img">
     </div>
 
   </div>
@@ -175,6 +187,8 @@
     <p>&copy; 2026 JASIC Welding. Todos los derechos reservados.</p>
   </div>
 </footer>
+
+<script src="../../assets/js/lb.js"></script>
 
 </body>
 </html>

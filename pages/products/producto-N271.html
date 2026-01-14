@@ -14,6 +14,18 @@
 
 <body>
 
+  <!-- LIGHTBOX CORREGIDO -->
+<div class="lightbox" id="lightbox">
+  <!-- OVERLAY para el fondo completo -->
+  <div class="lightbox-overlay"></div>
+  
+  <!-- Contenedor para la imagen -->
+  <div class="lightbox-inner">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" alt="">
+  </div>
+</div>
+
 <!-- ===================== -->
 <!-- HEADER -->
 <!-- ===================== -->
@@ -84,13 +96,13 @@
     <h2>Galería</h2>
 
     <div class="gallery-grid">
-      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-2-N271.JPG" alt="PRO MIG 350">
-      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-3-N271.JPG" alt="PRO MIG 350">
-      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-4-N271.JPG" alt="PRO MIG 350">
-      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-5-N271.JPG" alt="PRO MIG 350">
-      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-6-N271.JPG" alt="PRO MIG 350">
-      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-7-N271.JPG" alt="PRO MIG 350">
-      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-8-N271.JPG" alt="PRO MIG 350">
+      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-2-N271.JPG" alt="PRO MIG 350" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-3-N271.JPG" alt="PRO MIG 350" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-4-N271.JPG" alt="PRO MIG 350" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-5-N271.JPG" alt="PRO MIG 350" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-6-N271.JPG" alt="PRO MIG 350" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-7-N271.JPG" alt="PRO MIG 350" class="lightbox-img">
+      <img src="../../assets/img/Productos/PRO/MIG350 (N271)/PRO-MIG350-COMPACTA-8-N271.JPG" alt="PRO MIG 350" class="lightbox-img">
     </div>
 
   </div>
@@ -177,6 +189,8 @@
     <p>&copy; 2026 JASIC Welding. Todos los derechos reservados.</p>
   </div>
 </footer>
+
+<script src="../../assets/js/lb.js"></script>
 
 </body>
 </html>

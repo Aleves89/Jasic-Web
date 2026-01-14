@@ -14,6 +14,18 @@
 
 <body>
 
+  <!-- LIGHTBOX CORREGIDO -->
+<div class="lightbox" id="lightbox">
+  <!-- OVERLAY para el fondo completo -->
+  <div class="lightbox-overlay"></div>
+  
+  <!-- Contenedor para la imagen -->
+  <div class="lightbox-inner">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" alt="">
+  </div>
+</div>
+
 <header class="header">
   <div class="container header-container">
    <a href="../../index.html" class="logo-link">
@@ -64,9 +76,9 @@
   <div class="container">
     <h2>Galería</h2>
     <div class="gallery-grid">
-      <img src="../../assets/img/Productos/EVO20/ARC200 (Z2S32)/arc200 - z2s32 (2).webp" alt="">
-      <img src="../../assets/img/Productos/EVO20/ARC200 (Z2S32)/arc200 - z2s32 (3).webp" alt="">
-      <img src="../../assets/img/Productos/EVO20/ARC200 (Z2S32)/arc200 - z2s32 (1).webp" alt="">
+      <img src="../../assets/img/Productos/EVO20/ARC200 (Z2S32)/arc200 - z2s32 (2).webp" alt="" class="lightbox-img">
+      <img src="../../assets/img/Productos/EVO20/ARC200 (Z2S32)/arc200 - z2s32 (3).webp" alt="" class="lightbox-img">
+      <img src="../../assets/img/Productos/EVO20/ARC200 (Z2S32)/arc200 - z2s32 (1).webp" alt="" class="lightbox-img">
     </div>
   </div>
 </section>
@@ -118,6 +130,8 @@
     <p>&copy; 2026 JASIC Welding. Todos los derechos reservados.</p>
   </div>
 </footer>
+
+<script src="../../assets/js/lb.js"></script>
 
 </body>
 </html>

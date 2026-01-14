@@ -14,6 +14,18 @@
 
 <body>
 
+  <!-- LIGHTBOX CORREGIDO -->
+<div class="lightbox" id="lightbox">
+  <!-- OVERLAY para el fondo completo -->
+  <div class="lightbox-overlay"></div>
+  
+  <!-- Contenedor para la imagen -->
+  <div class="lightbox-inner">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" alt="">
+  </div>
+</div>
+
 <!-- ===================== -->
 <!-- HEADER -->
 <!-- ===================== -->
@@ -84,10 +96,10 @@
     <h2>Galería</h2>
 
     <div class="gallery-grid">
-      <img src="../../assets/img/Productos/EVO20/MIG200 PFC(N2S62)/MIG200 PFC-EVO20-2-(Z2S62).jpg" alt="">
-      <img src="../../assets/img/Productos/EVO20/MIG200 PFC(N2S62)/MIG200 PFC-EVO20-3-(Z2S62).jpg" alt="">
-      <img src="../../assets/img/Productos/EVO20/MIG200 PFC(N2S62)/MIG200 PFC-EVO20-4-(Z2S62).jpg" alt="">
-      <img src="../../assets/img/Productos/EVO20/MIG200 PFC(N2S62)/MIG200 PFC-EVO20-5-(Z2S62).jpg" alt="">
+      <img src="../../assets/img/Productos/EVO20/MIG200 PFC(N2S62)/MIG200 PFC-EVO20-2-(Z2S62).jpg" alt="" class="lightbox-img">
+      <img src="../../assets/img/Productos/EVO20/MIG200 PFC(N2S62)/MIG200 PFC-EVO20-3-(Z2S62).jpg" alt="" class="lightbox-img">
+      <img src="../../assets/img/Productos/EVO20/MIG200 PFC(N2S62)/MIG200 PFC-EVO20-4-(Z2S62).jpg" alt="" class="lightbox-img">
+      <img src="../../assets/img/Productos/EVO20/MIG200 PFC(N2S62)/MIG200 PFC-EVO20-5-(Z2S62).jpg" alt="" class="lightbox-img">
       
     </div>
 
@@ -175,6 +187,9 @@
     <p>&copy; 2026 JASIC Welding. Todos los derechos reservados.</p>
   </div>
 </footer>
+
+
+<script src="../../assets/js/lb.js"></script>
 
 </body>
 </html>
