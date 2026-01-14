@@ -371,3 +371,30 @@ body.lightbox-open {
 }
 
 
+#lightbox-img {
+  /* ... tus estilos existentes ... */
+  
+  /* CRÍTICO para touch en móviles */
+  touch-action: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+}
+
+/* Mejorar feedback táctil en móvil */
+@media (hover: none) and (pointer: coarse) {
+  #lightbox-img:active {
+    opacity: 0.9;
+  }
+  
+  .lightbox-close {
+    min-width: 44px !important;  /* Tamaño mínimo para toques */
+    min-height: 44px !important;
+  }
+}
+
+/* Prevenir scroll durante interacción */
+body.lightbox-open {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
+}
