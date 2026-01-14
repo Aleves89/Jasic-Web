@@ -10,6 +10,43 @@
 
   <!-- CSS PRODUCTO -->
   <link rel="stylesheet" href="../../assets/css/producto.css">
+
+    <!-- CSS LIGHTBOX (con preload para mejor performance) -->
+  <link rel="preload" href="../../assets/css/productos.css" as="style" onload="this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="../../assets/css/productos.css"></noscript>
+  
+  <!-- Fallback si preload falla -->
+  <script>
+    // Si CSS no carga en 2 segundos, forzar carga
+    setTimeout(function() {
+      var links = document.querySelectorAll('link[rel="preload"]');
+      links.forEach(function(link) {
+        if (link.href.includes('productos.css') && link.rel === 'preload') {
+          link.rel = 'stylesheet';
+        }
+      });
+    }, 2000);
+  </script>
+
+  <style id="lightbox-backup">
+  /* ESTILOS DE EMERGENCIA PARA LIGHTBOX */
+  .lightbox.active { 
+    display: flex !important; 
+    background: #000 !important;
+  }
+  .lightbox-inner { 
+    z-index: 2 !important; 
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  #lightbox-img { 
+    max-width: 100% !important; 
+    max-height: 100% !important;
+  }
+</style>
+
 </head>
 
 <body>
