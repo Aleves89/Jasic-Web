@@ -10,6 +10,6 @@
   window.gtag = gtag;
 
   gtag("js", new Date());
-  gtag("config", "G-425YKFZRV4");
+  gtag("config", "G-425YKFZRV4",{cookie_domain: "auto"});
 })();
 
