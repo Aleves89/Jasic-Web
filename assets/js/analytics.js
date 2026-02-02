@@ -10,6 +10,6 @@
   window.gtag = gtag;
 
   gtag("js", new Date());
-  gtag("config", "G-XXXXXXXXXX");
+  gtag("config", "G-425YKFZRV4");
 })();
 
