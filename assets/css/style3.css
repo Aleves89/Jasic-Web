@@ -418,3 +418,48 @@ body.lightbox-open {
   position: fixed;
   width: 100%;
 }
+
+/* ===================== */
+/* PROCESOS + IMÁGENES */
+/* ===================== */
+
+.tech-processes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+/* Texto */
+.tech-processes-text h2 {
+  margin-bottom: 20px;
+}
+
+.tech-processes-text .tech-list {
+  padding-left: 20px;
+}
+
+/* Imágenes */
+.tech-processes-images {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.tech-processes-images img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
+@media (max-width: 768px) {
+  .tech-processes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-processes-images {
+    margin-top: 30px;
+  }
+}
