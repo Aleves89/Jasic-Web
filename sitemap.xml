@@ -1,17 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
     <loc>https://jasicargentina.com.ar/</loc>
   </url>
-
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/Acerca%20de%20Jasic.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/Contacto.html</loc>
+  </url>
   <url>
     <loc>https://jasicargentina.com.ar/pages/Productos.html</loc>
   </url>
-
   <url>
     <loc>https://jasicargentina.com.ar/pages/Tecnologia.html</loc>
   </url>
-
-  
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-E201.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-E202.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-E2S12.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-L202.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-L209.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-L312.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-LS1500F.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-LS2000F.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-LS3000D.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-N220.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-N269.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-N271.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-N2A401.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-N2S62.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-N2SD2.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-N36801.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-N398.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-W212.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-W232.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-W32204.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-Z209.html</loc>
+  </url>
+  <url>
+    <loc>https://jasicargentina.com.ar/pages/products/producto-Z2S32.html</loc>
+  </url>
 </urlset>

@@ -1,31 +1,55 @@
-const slides = document.querySelectorAll('.carousel-slide');
-const container = document.querySelector('.carousel-container');
+// Carrusel de banners (home)
+(function () {
+  var slides = document.querySelectorAll(".carousel-slide");
+  var container = document.querySelector(".carousel-container");
+  if (!slides.length || !container) return;
 
-let currentIndex = 0;
+  var currentIndex = 0;
+  var timer = null;
 
-function updateCarousel() {
-  slides.forEach((slide, index) => {
-    slide.classList.toggle('active', index === currentIndex);
+  // Indicadores (dots)
+  var dots = document.createElement("div");
+  dots.className = "carousel-dots";
+  slides.forEach(function (_, i) {
+    var dot = document.createElement("button");
+    dot.className = "carousel-dot";
+    dot.setAttribute("aria-label", "Ir al banner " + (i + 1));
+    dot.addEventListener("click", function () {
+      currentIndex = i;
+      updateCarousel();
+      restart();
+    });
+    dots.appendChild(dot);
   });
+  container.parentNode.appendChild(dots);
 
-  const slideWidth = slides[0].offsetWidth + 50; // margin incluido
-  const viewportCenter = window.innerWidth / 2;
-  const slideCenter = slideWidth / 2;
+  function updateCarousel() {
+    slides.forEach(function (slide, index) {
+      slide.classList.toggle("active", index === currentIndex);
+    });
+    dots.querySelectorAll(".carousel-dot").forEach(function (d, i) {
+      d.classList.toggle("active", i === currentIndex);
+    });
 
-  const offset =
-    viewportCenter - slideCenter - currentIndex * slideWidth;
+    var slideWidth = slides[0].offsetWidth + 50; // margin incluido
+    var viewportCenter = window.innerWidth / 2;
+    var slideCenter = slideWidth / 2;
+    var offset = viewportCenter - slideCenter - currentIndex * slideWidth;
+    container.style.transform = "translateX(" + offset + "px)";
+  }
 
-  container.style.transform = `translateX(${offset}px)`;
-}
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    updateCarousel();
+  }
 
+  function restart() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(nextSlide, 4000);
+  }
 
-function nextSlide() {
-  currentIndex = (currentIndex + 1) % slides.length;
+  window.addEventListener("resize", updateCarousel);
+
   updateCarousel();
-}
-
-// automático
-setInterval(nextSlide, 4000);
-
-// iniciar
-updateCarousel();
+  restart();
+})();
