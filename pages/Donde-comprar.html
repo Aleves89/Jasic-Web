@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dónde Comprar | Distribuidores JASIC Argentina</title>
+  <meta name="description" content="Encontrá el distribuidor oficial, punto de venta o servicio técnico JASIC más cercano en Argentina. Soldadoras inverter MIG, TIG, MMA, plasma y láser con garantía oficial.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../assets/img/favicon/favicon192.png" type="image/x-icon">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/style3.css">
+  <!-- Leaflet (mapa) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <!-- CSS DÓNDE COMPRAR -->
+  <link rel="stylesheet" href="../assets/css/donde-comprar.css">
+
+  <!-- Google Analytics -->
+  <script src="../assets/js/analytics.js"></script>
+
+  <!-- Schema para SEO -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Dónde comprar JASIC en Argentina",
+  "url": "https://jasicargentina.com.ar/pages/Donde-comprar.html",
+  "description": "Red de distribuidores oficiales, puntos de venta y servicio técnico JASIC en Argentina.",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "JASIC Argentina",
+    "url": "https://jasicargentina.com.ar"
+  }
+}
+  </script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-container">
+      <a href="../index.html" class="logo-link">
+        <img src="../assets/img/Logo Jasic by GRX ( horizontal ).png" alt="JASIC Welding" class="logo">
+      </a>
+      <nav class="nav">
+        <a href="Productos.html">Productos</a>
+        <!-- <a href="Aportes.html">Aportes</a> -->
+        <a href="Tecnologia.html">Tecnología</a>
+        <a href="Donde-comprar.html">Dónde Comprar</a>
+        <!-- <a href="pages/Soporte.html">Soporte</a> -->
+        <a href="Acerca de Jasic.html">Acerca de Jasic</a>
+        <a href="Contacto.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===================== -->
+  <!-- HERO -->
+  <!-- ===================== -->
+  <section class="dc-hero">
+    <div class="container">
+      <span class="dc-eyebrow">Red oficial en Argentina</span>
+      <h1>Dónde Comprar</h1>
+      <p>
+        Encontrá el distribuidor oficial, punto de venta o servicio técnico
+        JASIC más cercano. Equipos originales, garantía oficial y asesoramiento
+        técnico en todo el país.
+      </p>
+
+      <div class="dc-stats">
+        <div class="dc-stat">
+          <strong id="stat-puntos">–</strong>
+          <span>Puntos de venta</span>
+        </div>
+        <div class="dc-stat">
+          <strong id="stat-provincias">–</strong>
+          <span>Provincias</span>
+        </div>
+        <div class="dc-stat">
+          <strong>100%</strong>
+          <span>Garantía oficial</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== -->
+  <!-- MAPA NACIONAL -->
+  <!-- ===================== -->
+  <section class="dc-map-section" id="dc-map-wrap">
+    <div class="container">
+      <div class="dc-map-frame">
+        <div id="dc-map" role="region" aria-label="Mapa de distribuidores JASIC en Argentina"></div>
+        <div class="dc-map-legend">
+          <span><i class="dot red"></i> Distribuidor JASIC</span>
+          <span><i class="dot blue"></i> Tu ubicación aproximada</span>
+          <span class="hint">Hacé clic en un punto para ver el detalle</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== -->
+  <!-- BARRA DE FILTROS -->
+  <!-- ===================== -->
+  <div class="dc-toolbar-wrap">
+    <div class="container dc-toolbar">
+
+      <div class="dc-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input id="dc-search" type="search" placeholder="Buscar por ciudad, provincia o nombre…" autocomplete="off" aria-label="Buscar distribuidor">
+      </div>
+
+      <div class="dc-select">
+        <select id="dc-provincia" aria-label="Filtrar por provincia">
+          <option value="">Todas las provincias</option>
+        </select>
+      </div>
+
+      <div class="dc-chips" role="group" aria-label="Tipo de punto">
+        <button class="dc-chip active" data-tipo="">Todos</button>
+        <button class="dc-chip" data-tipo="oficial">Oficiales</button>
+        <button class="dc-chip" data-tipo="venta">Puntos de venta</button>
+        <button class="dc-chip" data-tipo="servicio">Servicio técnico</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== -->
+  <!-- LISTA DE DISTRIBUIDORES -->
+  <!-- ===================== -->
+  <section class="dc-section">
+    <div class="container">
+
+      <div class="dc-results-head">
+        <div>
+          <h2>Distribuidores</h2>
+          <div class="dc-near loading" id="dc-near"></div>
+        </div>
+        <span class="dc-count" id="dc-count"></span>
+      </div>
+
+      <!-- Se genera desde distribuidores.js -->
+      <div class="dc-list" id="dc-list" aria-live="polite"></div>
+
+    </div>
+  </section>
+
+  <!-- ===================== -->
+  <!-- CTA -->
+  <!-- ===================== -->
+  <section class="dc-cta">
+    <div class="container">
+      <h2>¿No encontrás un distribuidor cerca?</h2>
+      <p>
+        Escribinos y te indicamos el punto de venta más conveniente
+        o te asesoramos directamente desde JASIC Argentina.
+      </p>
+      <a href="Contacto.html" class="btn-primary">Contactar a JASIC Argentina</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 JASIC Welding. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="../assets/js/distribuidores.data.js"></script>
+  <script src="../assets/js/distribuidores.js"></script>
+</body>
+</html>
