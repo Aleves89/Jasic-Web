@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <!-- CSS DÓNDE COMPRAR -->
-  <link rel="stylesheet" href="../assets/css/donde-comprar.css?v=4">
+  <link rel="stylesheet" href="../assets/css/donde-comprar.css?v=5">
 
   <!-- Google Analytics -->
   <script src="../assets/js/analytics.js"></script>
@@ -139,6 +139,10 @@
         <div>
           <h2>Distribuidores</h2>
           <div class="dc-near loading" id="dc-near"></div>
+          <button class="dc-geo" id="dc-geo" type="button" title="Usa el GPS o la red de tu dispositivo (te va a pedir permiso)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
+            Usar mi ubicación exacta
+          </button>
         </div>
         <span class="dc-count" id="dc-count"></span>
       </div>
@@ -173,7 +177,7 @@
   <!-- JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="../assets/js/distribuidores.data.js?v=4"></script>
-  <script src="../assets/js/distribuidores.js?v=4"></script>
+  <script src="../assets/js/distribuidores.data.js?v=5"></script>
+  <script src="../assets/js/distribuidores.js?v=5"></script>
 </body>
 </html>

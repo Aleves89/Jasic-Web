@@ -50,6 +50,8 @@ const $search   = document.getElementById("dc-search");
 const $prov     = document.getElementById("dc-provincia");
 const $chips    = document.querySelectorAll(".dc-chip");
 const $near     = document.getElementById("dc-near");
+const $geoBtn   = document.getElementById("dc-geo");
+let visitanteMarker = null;
 const $statPuntos = document.getElementById("stat-puntos");
 const $statProv   = document.getElementById("stat-provincias");
 
@@ -163,9 +165,44 @@ function initMapa() {
 function marcarVisitante() {
   if (!map || !state.visitante) return;
   const v = state.visitante;
-  L.circleMarker([v.lat, v.lng], {
+  if (visitanteMarker) map.removeLayer(visitanteMarker);
+  visitanteMarker = L.circleMarker([v.lat, v.lng], {
     radius: 7, color: "#fff", weight: 2, fillColor: "#3b82f6", fillOpacity: 0.9, className: "dc-you"
-  }).addTo(map).bindTooltip("Tu ubicación aproximada", { direction: "top", offset: [0, -8] });
+  }).addTo(map).bindTooltip(v.fuente === "gps" ? "Tu ubicación" : "Tu ubicación aproximada (por IP)", { direction: "top", offset: [0, -8] });
+}
+
+/* =========================================================
+   UBICACIÓN EXACTA (GPS / red del dispositivo, con permiso)
+   La geolocalización por IP falla con Starlink, redes móviles
+   y VPN (todos los usuarios "aparecen" en la pasarela del
+   proveedor). Este botón pide la ubicación real al navegador.
+   ========================================================= */
+function pedirUbicacionExacta() {
+  if (!navigator.geolocation) {
+    setNear("gps-error", "Tu navegador no permite obtener la ubicación");
+    return;
+  }
+  $geoBtn.disabled = true;
+  $geoBtn.classList.add("loading");
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      state.visitante = { lat: pos.coords.latitude, lng: pos.coords.longitude, ciudad: "", fuente: "gps" };
+      state.orden = "cercania";
+      marcarVisitante();
+      setNear("gps");
+      render();
+      if (map) map.flyTo([state.visitante.lat, state.visitante.lng], 9, { duration: 0.9 });
+      $geoBtn.classList.remove("loading");
+      $geoBtn.hidden = true;
+    },
+    (err) => {
+      $geoBtn.disabled = false;
+      $geoBtn.classList.remove("loading");
+      const msg = err.code === 1 ? "No diste permiso de ubicación" : "No se pudo obtener tu ubicación";
+      setNear(state.visitante ? "ok" : "error", msg);
+    },
+    { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+  );
 }
 
 function resaltarMarker(idx) {
@@ -209,6 +246,8 @@ async function init() {
     });
   });
 
+  if ($geoBtn) $geoBtn.addEventListener("click", pedirUbicacionExacta);
+
   initMapa();
   setNear("buscando");
   render();
@@ -226,17 +265,24 @@ async function init() {
 }
 
 /* Indicador "cerca tuyo" en la cabecera de resultados */
-function setNear(estado) {
+function setNear(estado, extra) {
   if (!$near) return;
+  const nota = extra ? ` <small>· ${esc(extra)}</small>` : "";
   if (estado === "buscando") {
     $near.className = "dc-near loading";
     $near.innerHTML = `${ICON.near} Detectando tu ubicación…`;
   } else if (estado === "ok") {
     $near.className = "dc-near ok";
-    $near.innerHTML = `${ICON.near} Ordenado por cercanía a <strong>${esc(state.visitante.ciudad || "tu ubicación")}</strong> <small>(aproximada por IP)</small>`;
+    $near.innerHTML = `${ICON.near} Ordenado por cercanía a <strong>${esc(state.visitante.ciudad || "tu zona")}</strong> <small>(aproximada por IP; puede fallar con Starlink o redes móviles)</small>${nota}`;
+  } else if (estado === "gps") {
+    $near.className = "dc-near gps";
+    $near.innerHTML = `${ICON.near} Ordenado por cercanía a <strong>tu ubicación exacta</strong>`;
+  } else if (estado === "gps-error") {
+    $near.className = "dc-near off";
+    $near.innerHTML = `${ICON.near} ${esc(extra || "No se pudo obtener tu ubicación")}`;
   } else {
     $near.className = "dc-near off";
-    $near.innerHTML = `${ICON.near} No pudimos estimar tu ubicación · orden alfabético`;
+    $near.innerHTML = `${ICON.near} No pudimos estimar tu ubicación · orden alfabético${nota}`;
   }
 }
 

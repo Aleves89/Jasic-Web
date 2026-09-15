@@ -257,6 +257,29 @@
 .dc-near strong { color: #fff; }
 .dc-near small { color: var(--text-muted); }
 .dc-near.loading svg { animation: dc-spin 1.6s linear infinite; }
+.dc-near.gps { color: var(--text-soft); }
+.dc-near.gps svg { color: #3b82f6; }
+
+.dc-geo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 0 0;
+  padding: 9px 16px;
+  background: transparent;
+  border: 1px solid rgba(59,130,246,0.6);
+  border-radius: 30px;
+  color: #8ec0ff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.dc-geo svg { width: 15px; height: 15px; }
+.dc-geo:hover { background: rgba(59,130,246,0.12); color: #fff; border-color: #3b82f6; }
+.dc-geo:disabled { opacity: 0.6; cursor: wait; }
+.dc-geo.loading svg { animation: dc-spin 1.2s linear infinite; }
 @keyframes dc-spin { to { transform: rotate(360deg); } }
 
 .dc-card-top {
