@@ -182,26 +182,36 @@ function pedirUbicacionExacta() {
     setNear("gps-error", "Tu navegador no permite obtener la ubicación");
     return;
   }
+  if (!window.isSecureContext) {
+    setNear("gps-error", "Abrí la página con https:// para poder usar tu ubicación");
+    return;
+  }
   $geoBtn.disabled = true;
   $geoBtn.classList.add("loading");
   navigator.geolocation.getCurrentPosition(
     (pos) => {
-      state.visitante = { lat: pos.coords.latitude, lng: pos.coords.longitude, ciudad: "", fuente: "gps" };
+      const { latitude, longitude, accuracy } = pos.coords;
+      state.visitante = { lat: latitude, lng: longitude, ciudad: "", fuente: "gps", precision: accuracy };
       state.orden = "cercania";
       marcarVisitante();
       setNear("gps");
       render();
-      if (map) map.flyTo([state.visitante.lat, state.visitante.lng], 9, { duration: 0.9 });
+      if (map) map.flyTo([latitude, longitude], accuracy > 5000 ? 7 : 10, { duration: 0.9 });
       $geoBtn.classList.remove("loading");
-      $geoBtn.hidden = true;
+      $geoBtn.disabled = false;   // se deja visible para poder reintentar
     },
     (err) => {
       $geoBtn.disabled = false;
       $geoBtn.classList.remove("loading");
-      const msg = err.code === 1 ? "No diste permiso de ubicación" : "No se pudo obtener tu ubicación";
-      setNear(state.visitante ? "ok" : "error", msg);
+      const msg = {
+        1: "Permiso de ubicación bloqueado. Habilitalo desde el candado de la barra de direcciones y volvé a intentar",
+        2: "El dispositivo no informó su ubicación. En Windows/Mac revisá que la ubicación del sistema esté activada",
+        3: "La ubicación tardó demasiado. Volvé a intentar"
+      }[err.code] || "No se pudo obtener tu ubicación";
+      setNear("gps-error", msg);
     },
-    { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+    // Sin caché y con alta precisión: evita reusar una posición vieja o estimada por IP
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
   );
 }
 
@@ -253,7 +263,11 @@ async function init() {
   render();
 
   // Ubicación por IP (no bloquea el primer render)
-  state.visitante = await ubicarPorIP();
+  const porIP = await ubicarPorIP();
+  // Si el usuario ya obtuvo su ubicación exacta mientras se consultaba la IP,
+  // el resultado por IP (menos preciso) NO debe pisarla.
+  if (state.visitante && state.visitante.fuente === "gps") return;
+  state.visitante = porIP;
   if (state.visitante) {
     marcarVisitante();
     setNear("ok");
@@ -276,7 +290,10 @@ function setNear(estado, extra) {
     $near.innerHTML = `${ICON.near} Ordenado por cercanía a <strong>${esc(state.visitante.ciudad || "tu zona")}</strong> <small>(aproximada por IP; puede fallar con Starlink o redes móviles)</small>${nota}`;
   } else if (estado === "gps") {
     $near.className = "dc-near gps";
-    $near.innerHTML = `${ICON.near} Ordenado por cercanía a <strong>tu ubicación exacta</strong>`;
+    const p = state.visitante && state.visitante.precision;
+    $near.innerHTML = p > 5000
+      ? `${ICON.near} Ordenado por cercanía a <strong>tu ubicación</strong> <small>(el dispositivo informó una precisión baja: ±${Math.round(p / 1000)} km)</small>`
+      : `${ICON.near} Ordenado por cercanía a <strong>tu ubicación exacta</strong>`;
   } else if (estado === "gps-error") {
     $near.className = "dc-near off";
     $near.innerHTML = `${ICON.near} ${esc(extra || "No se pudo obtener tu ubicación")}`;
