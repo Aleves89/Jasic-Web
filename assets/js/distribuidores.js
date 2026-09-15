@@ -3,7 +3,7 @@
    ---------------------------------------------------------
    Los datos viven en distribuidores.data.js (array DISTRIBUIDORES).
    Este archivo solo contiene la lógica:
-     - Mapa de Argentina (Leaflet + CARTO dark) con puntos rojos
+     - Mapa de Argentina (Leaflet + Esri Dark Gray Canvas, sin API key) con puntos rojos
      - Geolocalización aproximada por IP del visitante
      - Orden de la lista por cercanía (Haversine)
      - Búsqueda / filtros / tarjetas
@@ -55,7 +55,7 @@ const $statProv   = document.getElementById("stat-provincias");
 
 /* ---------- Utilidades ---------- */
 const normalizar = (s) =>
-  (s || "").toString().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  (s || "").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -124,13 +124,18 @@ function initMapa() {
   if (!el || typeof L === "undefined") return;
 
   map = L.map(el, {
-    center: AR_CENTER, zoom: 4, minZoom: 3, maxZoom: 18,
+    center: AR_CENTER, zoom: 4, minZoom: 3, maxZoom: 16,
     zoomControl: true, scrollWheelZoom: false, attributionControl: true
   });
 
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-    subdomains: "abcd", maxZoom: 19
+  // Mosaicos "Dark Gray Canvas" de Esri: gratuitos, sin API key, ya en tono
+  // oscuro. Se cargan base + etiquetas por separado.
+  const esriAttr = "Tiles &copy; Esri &mdash; Esri, HERE, Garmin, OpenStreetMap contributors";
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+    attribution: esriAttr, maxZoom: 16
+  }).addTo(map);
+  L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}", {
+    maxZoom: 16, pane: "tilePane", opacity: 0.85
   }).addTo(map);
 
   const icono = L.divIcon({

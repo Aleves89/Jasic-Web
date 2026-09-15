@@ -156,6 +156,11 @@
   background: #0b0b0b;
 }
 
+/* Mosaicos OSM en modo oscuro (invertidos + rotación de tono) */
+.dc-tiles-dark {
+  filter: invert(1) hue-rotate(180deg) brightness(0.82) contrast(0.95) saturate(0.55) grayscale(0.25);
+}
+
 /* Leaflet: controles al estilo del sitio */
 .leaflet-container { font-family: inherit; }
 .leaflet-bar { border: 1px solid rgba(255,255,255,0.15) !important; box-shadow: none !important; }
