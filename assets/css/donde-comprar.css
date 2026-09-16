@@ -282,6 +282,44 @@
 .dc-geo.loading svg { animation: dc-spin 1.2s linear infinite; }
 @keyframes dc-spin { to { transform: rotate(360deg); } }
 
+/* Ordenar por ciudad ingresada */
+.dc-ciudad {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.dc-ciudad label { white-space: nowrap; }
+.dc-ciudad input {
+  flex: 1 1 180px;
+  min-width: 0;
+  max-width: 280px;
+  height: 38px;
+  padding: 0 14px;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 30px;
+  color: #fff;
+  font: inherit;
+}
+.dc-ciudad input::placeholder { color: var(--text-muted); }
+.dc-ciudad input:focus { outline: none; border-color: #3b82f6; }
+.dc-ciudad button {
+  height: 38px;
+  padding: 0 16px;
+  background: var(--jasic-red);
+  border: none;
+  border-radius: 30px;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dc-ciudad button:hover { filter: brightness(1.1); }
+
 .dc-card-top {
   display: flex;
   align-items: center;

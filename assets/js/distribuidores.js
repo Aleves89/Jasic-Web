@@ -51,6 +51,9 @@ const $prov     = document.getElementById("dc-provincia");
 const $chips    = document.querySelectorAll(".dc-chip");
 const $near     = document.getElementById("dc-near");
 const $geoBtn   = document.getElementById("dc-geo");
+const $ciudadForm  = document.getElementById("dc-ciudad-form");
+const $ciudadInput = document.getElementById("dc-ciudad");
+const $ciudadList  = document.getElementById("dc-ciudades");
 let visitanteMarker = null;
 const $statPuntos = document.getElementById("stat-puntos");
 const $statProv   = document.getElementById("stat-provincias");
@@ -78,6 +81,14 @@ function distanciaKm(a, b) {
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
+/* ¿El punto cae en Argentina? Recuadro amplio (incluye Tierra del Fuego).
+   Descarta ubicaciones erróneas del dispositivo o de la IP (p. ej. routers
+   mal registrados en bases Wi-Fi que "ubican" al visitante en otro país). */
+function enArgentina(lat, lng) {
+  return Number.isFinite(lat) && Number.isFinite(lng) &&
+         lat <= -21.7 && lat >= -55.2 && lng >= -73.7 && lng <= -53.5;
+}
+
 function fmtKm(km) {
   if (km < 1) return "menos de 1 km";
   if (km < 100) return `${Math.round(km)} km`;
@@ -91,9 +102,9 @@ function fmtKm(km) {
    alfabético y la página sigue funcionando igual.
    ========================================================= */
 const IP_SERVICES = [
-  { url: "https://ipwho.is/",        parse: j => j.success !== false && { lat: j.latitude, lng: j.longitude, ciudad: [j.city, j.region].filter(Boolean).join(", ") } },
-  { url: "https://ipapi.co/json/",   parse: j => !j.error && { lat: j.latitude, lng: j.longitude, ciudad: [j.city, j.region].filter(Boolean).join(", ") } },
-  { url: "https://freeipapi.com/api/json", parse: j => ({ lat: j.latitude, lng: j.longitude, ciudad: [j.cityName, j.regionName].filter(Boolean).join(", ") }) }
+  { url: "https://ipwho.is/",        parse: j => j.success !== false && { lat: j.latitude, lng: j.longitude, pais: j.country_code, ciudad: [j.city, j.region].filter(Boolean).join(", ") } },
+  { url: "https://ipapi.co/json/",   parse: j => !j.error && { lat: j.latitude, lng: j.longitude, pais: j.country_code, ciudad: [j.city, j.region].filter(Boolean).join(", ") } },
+  { url: "https://freeipapi.com/api/json", parse: j => ({ lat: j.latitude, lng: j.longitude, pais: j.countryCode, ciudad: [j.cityName, j.regionName].filter(Boolean).join(", ") }) }
 ];
 
 async function fetchConTimeout(url, ms = 3500) {
@@ -111,6 +122,8 @@ async function ubicarPorIP() {
     try {
       const loc = s.parse(await fetchConTimeout(s.url));
       if (loc && Number.isFinite(loc.lat) && Number.isFinite(loc.lng)) {
+        // Si la IP ubica fuera de Argentina, no se usa (sería un orden absurdo)
+        if ((loc.pais && loc.pais !== "AR") || !enArgentina(loc.lat, loc.lng)) return null;
         return { ...loc, fuente: "ip" };
       }
     } catch (_) { /* probar el siguiente */ }
@@ -168,7 +181,7 @@ function marcarVisitante() {
   if (visitanteMarker) map.removeLayer(visitanteMarker);
   visitanteMarker = L.circleMarker([v.lat, v.lng], {
     radius: 7, color: "#fff", weight: 2, fillColor: "#3b82f6", fillOpacity: 0.9, className: "dc-you"
-  }).addTo(map).bindTooltip(v.fuente === "gps" ? "Tu ubicación" : "Tu ubicación aproximada (por IP)", { direction: "top", offset: [0, -8] });
+  }).addTo(map).bindTooltip(v.fuente === "gps" ? "Tu ubicación" : v.fuente === "ciudad" ? esc(v.ciudad) : "Tu ubicación aproximada (por IP)", { direction: "top", offset: [0, -8] });
 }
 
 /* =========================================================
@@ -191,6 +204,13 @@ function pedirUbicacionExacta() {
   navigator.geolocation.getCurrentPosition(
     (pos) => {
       const { latitude, longitude, accuracy } = pos.coords;
+      if (!enArgentina(latitude, longitude)) {
+        $geoBtn.classList.remove("loading");
+        $geoBtn.disabled = false;
+        setNear("gps-error", "Tu dispositivo informó una ubicación fuera de Argentina. Ingresá tu ciudad para ordenar por cercanía");
+        if ($ciudadInput) $ciudadInput.focus();
+        return;
+      }
       state.visitante = { lat: latitude, lng: longitude, ciudad: "", fuente: "gps", precision: accuracy };
       state.orden = "cercania";
       marcarVisitante();
@@ -213,6 +233,66 @@ function pedirUbicacionExacta() {
     // Sin caché y con alta precisión: evita reusar una posición vieja o estimada por IP
     { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
   );
+}
+
+/* =========================================================
+   UBICACIÓN POR CIUDAD (ingresada por el visitante)
+   Alternativa confiable cuando el GPS/Wi-Fi o la IP fallan.
+   1) lista local CIUDADES_AR  2) Photon (OSM) limitado a Argentina
+   ========================================================= */
+function initCiudades() {
+  if (!$ciudadForm || typeof CIUDADES_AR === "undefined") return;
+  if ($ciudadList) {
+    $ciudadList.innerHTML = CIUDADES_AR
+      .map(c => `<option value="${esc(c.nombre)}, ${esc(c.provincia)}"></option>`).join("");
+  }
+  $ciudadForm.addEventListener("submit", (e) => { e.preventDefault(); buscarCiudad($ciudadInput.value); });
+  $ciudadInput.addEventListener("change", () => {
+    if (buscarLocal($ciudadInput.value)) buscarCiudad($ciudadInput.value);
+  });
+}
+
+function buscarLocal(texto) {
+  const q = normalizar(texto).trim();
+  if (!q) return null;
+  const nombreQ = q.split(",")[0].trim();
+  return CIUDADES_AR.find(c => normalizar(`${c.nombre}, ${c.provincia}`) === q) ||
+         CIUDADES_AR.find(c => normalizar(c.nombre) === nombreQ) ||
+         CIUDADES_AR.find(c => normalizar(c.nombre).startsWith(nombreQ) && nombreQ.length >= 4) ||
+         null;
+}
+
+async function buscarCiudad(texto) {
+  const t = (texto || "").trim();
+  if (!t) return;
+  let loc = buscarLocal(t);
+  if (loc) {
+    loc = { lat: loc.lat, lng: loc.lng, ciudad: `${loc.nombre}, ${loc.provincia}` };
+  } else {
+    setNear("buscando");
+    try {
+      const url = "https://photon.komoot.io/api/?limit=5&lang=es&bbox=-73.7,-55.2,-53.5,-21.7&q=" + encodeURIComponent(t + ", Argentina");
+      const j = await fetchConTimeout(url, 5000);
+      const f = (j.features || []).find(f =>
+        (f.properties.countrycode || "").toUpperCase() === "AR" &&
+        enArgentina(f.geometry.coordinates[1], f.geometry.coordinates[0]));
+      if (f) {
+        const p = f.properties;
+        loc = { lat: f.geometry.coordinates[1], lng: f.geometry.coordinates[0],
+                ciudad: [p.name, p.state].filter(Boolean).join(", ") };
+      }
+    } catch (_) { /* sin conexión al buscador */ }
+  }
+  if (!loc) {
+    setNear("gps-error", `No encontramos "${t}". Probá con otra ciudad cercana`);
+    return;
+  }
+  state.visitante = { ...loc, fuente: "ciudad" };
+  state.orden = "cercania";
+  marcarVisitante();
+  setNear("ciudad");
+  render();
+  if (map) map.flyTo([loc.lat, loc.lng], 9, { duration: 0.9 });
 }
 
 function resaltarMarker(idx) {
@@ -257,6 +337,7 @@ async function init() {
   });
 
   if ($geoBtn) $geoBtn.addEventListener("click", pedirUbicacionExacta);
+  initCiudades();
 
   initMapa();
   setNear("buscando");
@@ -266,7 +347,7 @@ async function init() {
   const porIP = await ubicarPorIP();
   // Si el usuario ya obtuvo su ubicación exacta mientras se consultaba la IP,
   // el resultado por IP (menos preciso) NO debe pisarla.
-  if (state.visitante && state.visitante.fuente === "gps") return;
+  if (state.visitante && state.visitante.fuente !== "ip") return;
   state.visitante = porIP;
   if (state.visitante) {
     marcarVisitante();
@@ -294,6 +375,9 @@ function setNear(estado, extra) {
     $near.innerHTML = p > 5000
       ? `${ICON.near} Ordenado por cercanía a <strong>tu ubicación</strong> <small>(el dispositivo informó una precisión baja: ±${Math.round(p / 1000)} km)</small>`
       : `${ICON.near} Ordenado por cercanía a <strong>tu ubicación exacta</strong>`;
+  } else if (estado === "ciudad") {
+    $near.className = "dc-near gps";
+    $near.innerHTML = `${ICON.near} Ordenado por cercanía a <strong>${esc(state.visitante.ciudad)}</strong>`;
   } else if (estado === "gps-error") {
     $near.className = "dc-near off";
     $near.innerHTML = `${ICON.near} ${esc(extra || "No se pudo obtener tu ubicación")}`;
