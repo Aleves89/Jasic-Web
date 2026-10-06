@@ -66,6 +66,9 @@ const normalizar = (s) =>
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+/* tipo puede ser un texto ("venta") o una lista (["venta","servicio"]) */
+const tiposDe = (d) => (Array.isArray(d.tipo) ? d.tipo : [d.tipo]).filter(Boolean);
+
 const tieneCoords = (d) => Number.isFinite(d.lat) && Number.isFinite(d.lng);
 
 function mapsLinkUrl(d) {
@@ -397,7 +400,7 @@ function filtrar() {
 
   items = items.filter(({ d }) => {
     if (state.provincia && d.provincia !== state.provincia) return false;
-    if (state.tipo && d.tipo !== state.tipo) return false;
+    if (state.tipo && !tiposDe(d).includes(state.tipo)) return false;
     if (q) {
       const blob = normalizar([d.nombre, d.ciudad, d.provincia, d.direccion].join(" "));
       if (!blob.includes(q)) return false;
@@ -452,7 +455,7 @@ function render() {
       <article class="dc-card ${idx === state.activo ? "active" : ""} ${i === 0 && Number.isFinite(km) ? "nearest" : ""}" data-idx="${idx}" style="animation-delay:${Math.min(i, 12) * 40}ms">
         <div>
           <div class="dc-card-top">
-            <span class="dc-card-badge ${esc(d.tipo)}">${TIPOS[d.tipo] || esc(d.tipo)}</span>
+            <div class="dc-card-badges">${tiposDe(d).map(t => `<span class="dc-card-badge ${esc(t)}">${TIPOS[t] || esc(t)}</span>`).join("")}</div>
             ${dist}
           </div>
           <h3>${esc(d.nombre)}</h3>

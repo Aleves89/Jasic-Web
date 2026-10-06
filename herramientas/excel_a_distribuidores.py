@@ -28,6 +28,18 @@ except ImportError:
 UA = "JasicArgentina-Distribuidores/1.0 (info@jasicargentina.com.ar)"
 TIPO = {"distribuidor oficial": "oficial", "punto de venta": "venta",
         "servicio técnico": "servicio", "servicio tecnico": "servicio"}
+def tipos_de(v):
+    """'Punto de Venta, Servicio Técnico' -> ['venta','servicio']; uno solo -> 'venta'."""
+    partes = re.split(r"\s*(?:,|/|\+|;|\by\b)\s*", texto(v).lower())
+    t = []
+    for p in partes:
+        k = TIPO.get(p.strip())
+        if k and k not in t:
+            t.append(k)
+    if not t:
+        return "venta"
+    return t[0] if len(t) == 1 else t
+
 COLS = ["nombre","razon","cuit","tipo","direccion","ciudad","provincia","cp","telefono","whatsapp","email","horario",
         "web","instagram","facebook","youtube","tiktok","linkedin","maps","lat","lng","marcas","contacto","obs"]
 
@@ -140,7 +152,7 @@ def leer(path):
             continue
         d = {
             "nombre":    texto(row["nombre"]),
-            "tipo":      TIPO.get(texto(row["tipo"]).lower(), "venta"),
+            "tipo":      tipos_de(row["tipo"]),
             "ciudad":    texto(row["ciudad"]),
             "provincia": texto(row["provincia"]),
             "direccion": texto(row["direccion"]),

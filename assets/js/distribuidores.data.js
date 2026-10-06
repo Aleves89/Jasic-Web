@@ -6,7 +6,8 @@
    Se puede regenerar con herramientas/excel_a_distribuidores.py
    o editar a mano.
 
-   tipo:      "oficial" | "venta" | "servicio"
+   tipo:      "oficial" | "venta" | "servicio", o varios en lista:
+              ["venta", "servicio"]  (muestra una etiqueta por cada uno)
    whatsapp:  solo números con código de país (549...)
    lat / lng: coordenadas decimales (sin ellas no aparece en el mapa)
    ========================================================= */
@@ -142,7 +143,7 @@ const DISTRIBUIDORES = [
   },
   {
     nombre: "Máquinas para Soldaduras",
-    tipo: "servicio",
+    tipo: ["venta", "servicio"],
     ciudad: "Mar del Plata",
     provincia: "Buenos Aires",
     direccion: "Magallanes 6423, Mar del Plata",
