@@ -61,6 +61,10 @@ def coords_desde_link(url):
         r"/place/(-?\d+\.\d+),(-?\d+\.\d+)",
         r"@(-?\d+\.\d+),(-?\d+\.\d+)",
     ]
+    # Link de "Cómo llegar": el destino viene como !1d<lng>!2d<lat> (orden invertido)
+    m = re.search(r"!1d(-?\d+\.\d+)!2d(-?\d+\.\d+)", final)
+    if m and en_argentina(float(m.group(2)), float(m.group(1))):
+        return float(m.group(2)), float(m.group(1))
     for pat in patrones:
         m = re.search(pat, final)
         if m:
@@ -100,22 +104,39 @@ def coords_desde_direccion(direccion, ciudad, provincia):
 # Lectura del Excel
 # ---------------------------------------------------------------
 def social(v, base):
-    v = (v or "").strip()
+    v = texto(v)
     if not v:
         return ""
     if v.startswith("http"):
         return v
     return base + v.lstrip("@").strip("/")
 
+VACIOS = {"-", "–", "no", "no tenemos", "no tiene", "n/a", "na", "s/d", "si", "sí"}
+EJEMPLO = "Ferretería Industrial Norte"   # fila de ejemplo del formulario
+
 def texto(v):
-    return str(v).strip() if v is not None else ""
+    if v is None:
+        return ""
+    if isinstance(v, float) and v.is_integer():
+        v = int(v)
+    t = str(v).strip().lstrip("´'`")
+    return "" if t.lower() in VACIOS else t
 
 def leer(path):
     ws = load_workbook(path, data_only=True)["Datos"]
     out = []
-    for r in ws.iter_rows(min_row=5, values_only=True):
+    for r in ws.iter_rows(min_row=4, values_only=True):
         row = dict(zip(COLS, r))
-        if not row["nombre"]:
+        if texto(row["nombre"]) == EJEMPLO:
+            continue
+        if not texto(row["nombre"]):
+            # fila suelta con solo redes sociales: se suman al distribuidor anterior
+            if out:
+                for k, base in (("instagram", "https://www.instagram.com/"), ("facebook", "https://www.facebook.com/")):
+                    if not out[-1].get(k) and texto(row[k]):
+                        out[-1][k] = social(row[k], base)
+                if not out[-1].get("tiktok") and texto(row["tiktok"]):
+                    out[-1]["tiktok"] = social(row["tiktok"], "https://www.tiktok.com/@")
             continue
         d = {
             "nombre":    texto(row["nombre"]),
@@ -129,6 +150,7 @@ def leer(path):
             "web":       texto(row["web"]),
             "instagram": social(row["instagram"], "https://www.instagram.com/"),
             "facebook":  social(row["facebook"], "https://www.facebook.com/"),
+            "tiktok":    social(row["tiktok"], "https://www.tiktok.com/@"),
             "mapsQuery": ", ".join(x for x in [texto(row["direccion"]), texto(row["ciudad"]), texto(row["provincia"])] if x),
         }
         print(f"  · {d['nombre']} ({d['ciudad']})")
@@ -166,6 +188,15 @@ def main(paths):
             todos += leer(f)
     if not todos:
         sys.exit("No se encontraron filas de datos.")
+    # Quitar duplicados (mismo formulario enviado dos veces)
+    vistos, unicos = set(), []
+    for d in todos:
+        clave = (d["nombre"].lower(), d["direccion"].lower())
+        if clave in vistos:
+            print("  (duplicado omitido)", d["nombre"])
+            continue
+        vistos.add(clave); unicos.append(d)
+    todos = unicos
     todos.sort(key=lambda d: (d["provincia"], d["ciudad"], d["nombre"]))
     js = ("/* Generado por herramientas/excel_a_distribuidores.py — no editar a mano */\n"
           "const DISTRIBUIDORES = " + json.dumps(todos, ensure_ascii=False, indent=2) + ";\n")
