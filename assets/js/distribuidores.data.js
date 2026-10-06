@@ -157,7 +157,7 @@ const DISTRIBUIDORES = [
     lat: -38.0228271, lng: -57.574564
   },
   {
-    nombre: "Soldaduras",
+    nombre: "Soldaduras · Welding.com.ar",
     tipo: "venta",
     ciudad: "Lomas del Mirador",
     provincia: "Buenos Aires",
