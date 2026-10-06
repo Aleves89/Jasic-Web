@@ -155,5 +155,21 @@ const DISTRIBUIDORES = [
     tiktok: "",
     mapsQuery: "Magallanes 6423, Mar del Plata",
     lat: -38.0228271, lng: -57.574564
+  },
+  {
+    nombre: "Soldaduras",
+    tipo: "venta",
+    ciudad: "Lomas del Mirador",
+    provincia: "Buenos Aires",
+    direccion: "Av. Gral. Enrique Mosconi 338, Lomas del Mirador",
+    telefono: "+54 9 11 4916-2325",
+    whatsapp: "5491149162325",
+    horario: "Lunes a Viernes · 8:00 – 16:00",
+    web: "https://www.welding.com.ar/",
+    instagram: "https://www.instagram.com/soldaduras",
+    facebook: "",
+    tiktok: "https://www.tiktok.com/@welding.com.ar",
+    mapsQuery: "Soldaduras, Av. Gral. Enrique Mosconi 338, Lomas del Mirador",
+    lat: -34.659043, lng: -58.5296264
   }
 ];
