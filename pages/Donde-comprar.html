@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Dónde Comprar | Distribuidores JASIC Argentina</title>
-  <meta name="description" content="Encontrá el distribuidor oficial, punto de venta o servicio técnico JASIC más cercano en Argentina. Soldadoras inverter MIG, TIG, MMA, plasma y láser con garantía oficial.">
+  <title>Dónde Comprar | Puntos de venta JASIC Argentina</title>
+  <meta name="description" content="Encontrá el punto de venta JASIC más cercano en Argentina. Soldadoras inverter MIG, TIG, MMA, plasma y láser con garantía oficial.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../assets/img/favicon/favicon192.png" type="image/x-icon">
 
@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <!-- CSS DÓNDE COMPRAR -->
-  <link rel="stylesheet" href="../assets/css/donde-comprar.css?v=12">
+  <link rel="stylesheet" href="../assets/css/donde-comprar.css?v=14">
 
   <!-- Google Analytics -->
   <script src="../assets/js/analytics.js"></script>
@@ -25,7 +25,7 @@
   "@type": "WebPage",
   "name": "Dónde comprar JASIC en Argentina",
   "url": "https://jasicargentina.com.ar/pages/Donde-comprar.html",
-  "description": "Red de distribuidores oficiales, puntos de venta y servicio técnico JASIC en Argentina.",
+  "description": "Red de puntos de venta JASIC en Argentina.",
   "isPartOf": {
     "@type": "WebSite",
     "name": "JASIC Argentina",
@@ -59,11 +59,10 @@
   <!-- ===================== -->
   <section class="dc-hero">
     <div class="container">
-      <span class="dc-eyebrow">Red oficial en Argentina</span>
+      <span class="dc-eyebrow">Puntos de venta en Argentina</span>
       <h1>Dónde Comprar</h1>
       <p>
-        Encontrá el distribuidor oficial, punto de venta o servicio técnico
-        JASIC más cercano. Equipos originales, garantía oficial y asesoramiento
+        Encontrá el punto de venta JASIC más cercano. Equipos originales, garantía oficial y asesoramiento
         técnico en todo el país.
       </p>
 
@@ -90,9 +89,9 @@
   <section class="dc-map-section" id="dc-map-wrap">
     <div class="container">
       <div class="dc-map-frame">
-        <div id="dc-map" role="region" aria-label="Mapa de distribuidores JASIC en Argentina"></div>
+        <div id="dc-map" role="region" aria-label="Mapa de puntos de venta JASIC en Argentina"></div>
         <div class="dc-map-legend">
-          <span><i class="dot red"></i> Distribuidor JASIC</span>
+          <span><i class="dot red"></i> Punto de venta JASIC</span>
           <span><i class="dot blue"></i> Tu ubicación aproximada</span>
           <span class="hint">Hacé clic en un punto para ver el detalle</span>
         </div>
@@ -110,7 +109,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
         </svg>
-        <input id="dc-search" type="search" placeholder="Buscar por ciudad, provincia o nombre…" autocomplete="off" aria-label="Buscar distribuidor">
+        <input id="dc-search" type="search" placeholder="Buscar por ciudad, provincia o nombre…" autocomplete="off" aria-label="Buscar punto de venta">
       </div>
 
       <div class="dc-select">
@@ -119,12 +118,16 @@
         </select>
       </div>
 
+      <!-- Filtro por tipo: desactivado mientras solo haya puntos de venta.
+           Para reactivarlo cuando existan "Distribuidor Oficial" y "Servicio Técnico",
+           quitar este comentario (el JS ya los soporta).
       <div class="dc-chips" role="group" aria-label="Tipo de punto">
         <button class="dc-chip active" data-tipo="">Todos</button>
         <button class="dc-chip" data-tipo="oficial">Oficiales</button>
         <button class="dc-chip" data-tipo="venta">Puntos de venta</button>
         <button class="dc-chip" data-tipo="servicio">Servicio técnico</button>
       </div>
+      -->
 
     </div>
   </div>
@@ -137,7 +140,7 @@
 
       <div class="dc-results-head">
         <div>
-          <h2>Distribuidores</h2>
+          <h2>Puntos de venta</h2>
           <div class="dc-near loading" id="dc-near"></div>
           <button class="dc-geo" id="dc-geo" type="button" title="Usa el GPS o la red de tu dispositivo (te va a pedir permiso)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
@@ -164,7 +167,7 @@
   <!-- ===================== -->
   <section class="dc-cta">
     <div class="container">
-      <h2>¿No encontrás un distribuidor cerca?</h2>
+      <h2>¿No encontrás un punto de venta cerca?</h2>
       <p>
         Escribinos y te indicamos el punto de venta más conveniente
         o te asesoramos directamente desde JASIC Argentina.
@@ -183,8 +186,8 @@
   <!-- JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="../assets/js/distribuidores.data.js?v=12"></script>
-  <script src="../assets/js/ciudades-ar.data.js?v=12"></script>
-  <script src="../assets/js/distribuidores.js?v=12"></script>
+  <script src="../assets/js/distribuidores.data.js?v=14"></script>
+  <script src="../assets/js/ciudades-ar.data.js?v=14"></script>
+  <script src="../assets/js/distribuidores.js?v=14"></script>
 </body>
 </html>

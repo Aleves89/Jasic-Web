@@ -6,8 +6,10 @@
    Se puede regenerar con herramientas/excel_a_distribuidores.py
    o editar a mano.
 
-   tipo:      "oficial" | "venta" | "servicio", o varios en lista:
-              ["venta", "servicio"]  (muestra una etiqueta por cada uno)
+   tipo:      por ahora todos "venta" (Punto de Venta).
+              Las categorías "oficial" y "servicio" quedan reservadas
+              hasta definir criterios; el código ya las soporta, también
+              combinadas en lista: ["venta", "servicio"]
    whatsapp:  solo números con código de país (549...)
    lat / lng: coordenadas decimales (sin ellas no aparece en el mapa)
    ========================================================= */
@@ -31,7 +33,7 @@ const DISTRIBUIDORES = [
   },
   {
     nombre: "Soldaduras Tigre",
-    tipo: "oficial",
+    tipo: "venta",
     ciudad: "Tigre",
     provincia: "Buenos Aires",
     direccion: "Chubut 1430, Tigre",
@@ -143,7 +145,7 @@ const DISTRIBUIDORES = [
   },
   {
     nombre: "Máquinas para Soldaduras",
-    tipo: ["venta", "servicio"],
+    tipo: "venta",
     ciudad: "Mar del Plata",
     provincia: "Buenos Aires",
     direccion: "Magallanes 6423, Mar del Plata",
@@ -172,5 +174,37 @@ const DISTRIBUIDORES = [
     tiktok: "https://www.tiktok.com/@welding.com.ar",
     mapsQuery: "Soldaduras, Av. Gral. Enrique Mosconi 338, Lomas del Mirador",
     lat: -34.659043, lng: -58.5296264
+  },
+  {
+    nombre: "Solgas Berden",
+    tipo: "venta",
+    ciudad: "Lanús Oeste",
+    provincia: "Buenos Aires",
+    direccion: "Mendoza 2540, Lanús Oeste",
+    telefono: "+54 11 4262-8169",
+    whatsapp: "5491139585487",
+    horario: "Lunes a Viernes · 7:30 – 12:30 y 14:00 – 18:00 · Sábados 9:00 – 12:00",
+    web: "https://www.solgasberdensrl.com",
+    instagram: "",
+    facebook: "",
+    tiktok: "",
+    mapsQuery: "Solgas Berden, Mendoza 2540, Lanús",
+    lat: -34.6934614, lng: -58.4137489
+  },
+  {
+    nombre: "RR Gases Industriales",
+    tipo: "venta",
+    ciudad: "Esperanza",
+    provincia: "Santa Fe",
+    direccion: "Pje. Illia esq. R. Peña (Ruta 6), Esperanza",
+    telefono: "(03496) 53-2617",
+    whatsapp: "5493496532617",
+    horario: "Lunes a Viernes · 7:00 – 12:00 y 14:00 – 16:00",
+    web: "",
+    instagram: "https://www.instagram.com/rrgasesindustriales",
+    facebook: "",
+    tiktok: "",
+    mapsQuery: "R R Gases Industriales, Esperanza, Santa Fe",
+    lat: -31.4663622, lng: -60.9165498
   }
 ];
