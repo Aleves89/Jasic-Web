@@ -206,5 +206,21 @@ const DISTRIBUIDORES = [
     tiktok: "",
     mapsQuery: "R R Gases Industriales, Esperanza, Santa Fe",
     lat: -31.4663622, lng: -60.9165498
+  },
+  {
+    nombre: "JPL Soldadoras",
+    tipo: "venta",
+    ciudad: "Firmat",
+    provincia: "Santa Fe",
+    direccion: "San Luis 1253, Firmat",
+    telefono: "+54 3462 32-0981",
+    whatsapp: "5493465534644",
+    horario: "Atención 24 hs",
+    web: "",
+    instagram: "https://www.instagram.com/jpl.soldadoras",
+    facebook: "https://www.facebook.com/share/1FC2B9KrYu/",
+    tiktok: "",
+    mapsQuery: "San Luis 1253, Firmat, Santa Fe",
+    lat: -33.456253, lng: -61.4803582
   }
 ];

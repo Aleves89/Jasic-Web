@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Puntos de venta JASIC en Argentina | JASIC Argentina</title>
+  <meta name="description" content="Encontrá el punto de venta JASIC más cercano y contactalo en un toque. Soldadoras inverter MMA, MIG, TIG, plasma y láser con garantía oficial en todo el país.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="icon" href="../assets/img/favicon/favicon192.png" type="image/x-icon">
+
+  <!-- Estilos base del sitio (header, nav, footer) -->
+  <link rel="stylesheet" href="../assets/css/style3.css">
+  <!-- Tipografía para títulos y cifras -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">
+  <!-- Mapa -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <!-- Estilos de esta página -->
+  <link rel="stylesheet" href="../assets/css/distribuidores.css?v=1">
+
+  <script src="../assets/js/analytics.js"></script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Puntos de venta JASIC en Argentina",
+  "url": "https://jasicargentina.com.ar/pages/Distribuidores.html",
+  "description": "Red de puntos de venta JASIC en Argentina, ordenada por cercanía.",
+  "isPartOf": { "@type": "WebSite", "name": "JASIC Argentina", "url": "https://jasicargentina.com.ar" }
+}
+  </script>
+</head>
+<body class="dx">
+
+  <a class="dx-skip" href="#dx-red">Saltar a la lista de puntos de venta</a>
+
+  <header class="header">
+    <div class="container header-container">
+      <a href="../index.html" class="logo-link">
+        <img src="../assets/img/Logo Jasic by GRX ( horizontal ).png" alt="JASIC Argentina" class="logo">
+      </a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="main-nav">
+        <a href="Productos.html">Productos</a>
+        <a href="Tecnologia.html">Tecnología</a>
+        <a href="Distribuidores.html" class="active" aria-current="page">Dónde comprar</a>
+        <a href="Acerca de Jasic.html">Acerca de Jasic</a>
+        <a href="Contacto.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ ESCENARIO: el más cercano ============ -->
+    <section class="dx-stage" aria-labelledby="dx-titulo">
+      <div class="dx-panel">
+        <div class="dx-panel-inner">
+          <h1 class="dx-titulo" id="dx-titulo">Tu punto de venta JASIC más cercano</h1>
+
+          <!-- Ficha del punto seleccionado (la completa el script) -->
+          <article class="dx-ficha" id="dx-ficha" aria-live="polite" aria-busy="true">
+            <p class="dx-cargando">Buscando el punto de venta más cercano…</p>
+          </article>
+
+          <!-- Desde dónde se mide -->
+          <div class="dx-ubicacion" id="dx-ubicacion">
+            <p class="dx-origen" id="dx-origen" aria-live="polite">Calculando tu ubicación…</p>
+            <div class="dx-ubicacion-controles">
+              <button type="button" class="dx-btn dx-btn-ghost" id="dx-gps">
+                <svg class="dx-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="7.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3"/></svg>
+                Usar mi ubicación
+              </button>
+              <form class="dx-ciudad" id="dx-ciudad-form" role="search" autocomplete="off">
+                <label class="dx-visually-hidden" for="dx-ciudad">Tu ciudad</label>
+                <input id="dx-ciudad" type="text" list="dx-ciudades" placeholder="O escribí tu ciudad" enterkeyhint="search">
+                <datalist id="dx-ciudades"></datalist>
+                <button type="submit" class="dx-btn dx-btn-ghost dx-btn-icon" aria-label="Buscar ciudad">
+                  <svg class="dx-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dx-mapa-marco">
+        <div id="dx-mapa" class="dx-mapa" role="region" aria-label="Mapa de puntos de venta JASIC en Argentina"></div>
+      </div>
+    </section>
+
+    <!-- ============ TODA LA RED ============ -->
+    <section class="dx-red" id="dx-red" aria-labelledby="dx-red-titulo">
+      <div class="dx-red-cabecera">
+        <div>
+          <h2 id="dx-red-titulo">Toda la red JASIC</h2>
+          <p class="dx-red-resumen" id="dx-red-resumen">12 puntos de venta en 5 provincias.</p>
+        </div>
+        <div class="dx-filtros" role="search">
+          <div class="dx-campo">
+            <label for="dx-buscar">Buscar</label>
+            <input id="dx-buscar" type="search" placeholder="Nombre, ciudad o provincia">
+          </div>
+          <div class="dx-campo">
+            <label for="dx-provincia">Provincia</label>
+            <select id="dx-provincia">
+              <option value="">Todas</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <ol class="dx-lista" id="dx-lista" aria-live="polite"></ol>
+    </section>
+
+    <!-- ============ CIERRE ============ -->
+    <section class="dx-cierre" aria-labelledby="dx-cierre-titulo">
+      <div class="dx-cierre-inner">
+        <h2 id="dx-cierre-titulo">¿No hay un punto de venta cerca tuyo?</h2>
+        <p>Escribinos y te indicamos dónde conseguir tu equipo JASIC, o te asesoramos directamente desde JASIC Argentina.</p>
+        <div class="dx-acciones">
+          <a class="dx-btn dx-btn-primario" href="tel:+541135370248">
+            <svg class="dx-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.6 19.6 0 0 1-8.5-3 19.3 19.3 0 0 1-6-6A19.6 19.6 0 0 1 1.3 3.8 2 2 0 0 1 3.3 1.6h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L7.3 9.5a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            +54 11 3537-0248
+          </a>
+          <a class="dx-btn dx-btn-secundario" href="https://wa.me/541135370248?text=Hola%2C%20busco%20un%20punto%20de%20venta%20JASIC%20cerca%20de%20mi%20zona." target="_blank" rel="noopener">
+            <svg class="dx-ico dx-ico-relleno" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.15-1.75-.86-2-.96-.28-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.76-1.66-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.48-.5-.66-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.48.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.24-.7.24-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3 .78.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>
+            WhatsApp
+          </a>
+          <a class="dx-btn dx-btn-ghost" href="mailto:info@jasicargentina.com.ar">info@jasicargentina.com.ar</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-col footer-brand">
+        <img src="../assets/img/Logo Jasic by GRX ( horizontal ).png" alt="JASIC Argentina" class="footer-logo" loading="lazy">
+        <p>Soldadoras inverter MMA, TIG, MIG/MAG, corte plasma y soldadura láser. Tecnología industrial JASIC en Argentina.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Navegación</h3>
+        <ul class="footer-links">
+          <li><a href="Productos.html">Productos</a></li>
+          <li><a href="Tecnologia.html">Tecnología</a></li>
+          <li><a href="Distribuidores.html">Dónde comprar</a></li>
+          <li><a href="Acerca de Jasic.html">Acerca de Jasic</a></li>
+          <li><a href="Contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Contacto</h3>
+        <ul class="footer-links">
+          <li>Buenos Aires, Argentina</li>
+          <li><a href="tel:+541135370248">+54 11 3537-0248</a></li>
+          <li><a href="mailto:info@jasicargentina.com.ar">info@jasicargentina.com.ar</a></li>
+          <li><a href="https://wa.me/541135370248" target="_blank" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 JASIC Argentina &middot; Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/distribuidores.data.js?v=14"></script>
+  <script src="../assets/js/ciudades-ar.data.js?v=14"></script>
+  <script src="../assets/js/distribuidores-cercano.js?v=1"></script>
+</body>
+</html>
