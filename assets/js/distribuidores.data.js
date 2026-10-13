@@ -60,6 +60,8 @@ const DISTRIBUIDORES = [
     instagram: "https://www.instagram.com/segutecnica/",
     facebook: "https://www.facebook.com/segutecnica/",
     tiktok: "",
+    youtube: "https://www.youtube.com/channel/UCqWQ_n9x56gK8PBxycOGM2Q",
+    linkedin: "https://www.linkedin.com/company/segutecnica/",
     mapsQuery: "Segutecnica Local Comercial Berisso",
     lat: -34.8822579, lng: -57.9013397
   },
@@ -76,6 +78,8 @@ const DISTRIBUIDORES = [
     instagram: "https://www.instagram.com/segutecnica/",
     facebook: "https://www.facebook.com/segutecnica/",
     tiktok: "",
+    youtube: "https://www.youtube.com/channel/UCqWQ_n9x56gK8PBxycOGM2Q",
+    linkedin: "https://www.linkedin.com/company/segutecnica/",
     mapsQuery: "Segutecnica Local Comercial Olmos",
     lat: -34.9810812, lng: -58.0328652
   },

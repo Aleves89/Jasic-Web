@@ -163,6 +163,8 @@ def leer(path):
             "instagram": social(row["instagram"], "https://www.instagram.com/"),
             "facebook":  social(row["facebook"], "https://www.facebook.com/"),
             "tiktok":    social(row["tiktok"], "https://www.tiktok.com/@"),
+            "youtube":   social(row["youtube"], "https://www.youtube.com/@"),
+            "linkedin":  social(row["linkedin"], "https://www.linkedin.com/company/"),
             "mapsQuery": ", ".join(x for x in [texto(row["direccion"]), texto(row["ciudad"]), texto(row["provincia"])] if x),
         }
         print(f"  · {d['nombre']} ({d['ciudad']})")
