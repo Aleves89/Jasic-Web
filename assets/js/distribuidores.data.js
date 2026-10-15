@@ -226,5 +226,21 @@ const DISTRIBUIDORES = [
     tiktok: "",
     mapsQuery: "San Luis 1253, Firmat, Santa Fe",
     lat: -33.456253, lng: -61.4803582
+  },
+  {
+    nombre: "FDS Gases Industriales",
+    tipo: "venta",
+    ciudad: "Cipolletti",
+    provincia: "Río Negro",
+    direccion: "Confluencia 1479, Cipolletti",
+    telefono: "+54 299 607-0494",
+    whatsapp: "5492996070494",
+    horario: "Lunes a Viernes · 8:00 – 17:00",
+    web: "",
+    instagram: "https://www.instagram.com/fdsgases",
+    facebook: "",
+    tiktok: "",
+    mapsQuery: "FDS Gases Industriales, Confluencia 1479, Cipolletti",
+    lat: -38.9248454, lng: -67.9724278
   }
 ];
