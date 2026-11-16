@@ -1,55 +1,78 @@
-// Carrusel de banners (home)
+// Banners del inicio (FUN-04, ACC-03, REN-15): banda de ancho completo con scroll-snap,
+// anterior/siguiente, pausa y avance automático que se detiene con el cursor, el foco,
+// la pestaña oculta o la preferencia de movimiento reducido.
 (function () {
-  var slides = document.querySelectorAll(".carousel-slide");
-  var container = document.querySelector(".carousel-container");
-  if (!slides.length || !container) return;
+  "use strict";
+  var raiz = document.querySelector(".banners");
+  if (!raiz) return;
+  var pista = raiz.querySelector(".banners-pista");
+  var slides = Array.prototype.slice.call(pista.children);
+  if (slides.length < 2) return;
 
-  var currentIndex = 0;
+  var reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var pausado = reducido;
+  var actual = 0;
   var timer = null;
 
-  // Indicadores (dots)
-  var dots = document.createElement("div");
-  dots.className = "carousel-dots";
+  var controles = document.createElement("div");
+  controles.className = "banners-controles";
+  controles.innerHTML =
+    '<button type="button" class="banners-ant" aria-label="Banner anterior">&#8592;</button>' +
+    '<div class="banners-puntos"></div>' +
+    '<button type="button" class="banners-sig" aria-label="Banner siguiente">&#8594;</button>' +
+    '<button type="button" class="banners-pausa"></button>';
+  raiz.appendChild(controles);
+  var puntos = controles.querySelector(".banners-puntos");
+  var btnPausa = controles.querySelector(".banners-pausa");
+
   slides.forEach(function (_, i) {
-    var dot = document.createElement("button");
-    dot.className = "carousel-dot";
-    dot.setAttribute("aria-label", "Ir al banner " + (i + 1));
-    dot.addEventListener("click", function () {
-      currentIndex = i;
-      updateCarousel();
-      restart();
-    });
-    dots.appendChild(dot);
+    var b = document.createElement("button");
+    b.type = "button";
+    b.setAttribute("aria-label", "Ver banner " + (i + 1) + " de " + slides.length);
+    b.addEventListener("click", function () { ir(i); });
+    puntos.appendChild(b);
   });
-  container.parentNode.appendChild(dots);
 
-  function updateCarousel() {
-    slides.forEach(function (slide, index) {
-      slide.classList.toggle("active", index === currentIndex);
+  function marcar() {
+    Array.prototype.forEach.call(puntos.children, function (b, i) {
+      b.setAttribute("aria-current", i === actual ? "true" : "false");
     });
-    dots.querySelectorAll(".carousel-dot").forEach(function (d, i) {
-      d.classList.toggle("active", i === currentIndex);
-    });
-
-    var slideWidth = slides[0].offsetWidth + 50; // margin incluido
-    var viewportCenter = window.innerWidth / 2;
-    var slideCenter = slideWidth / 2;
-    var offset = viewportCenter - slideCenter - currentIndex * slideWidth;
-    container.style.transform = "translateX(" + offset + "px)";
+    btnPausa.textContent = pausado ? "▶" : "❚❚";
+    btnPausa.setAttribute("aria-label", pausado ? "Reanudar banners" : "Pausar banners");
   }
 
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    updateCarousel();
+  function ir(i) {
+    actual = (i + slides.length) % slides.length;
+    pista.scrollTo({ left: slides[actual].offsetLeft - pista.offsetLeft, behavior: reducido ? "auto" : "smooth" });
+    marcar();
   }
 
-  function restart() {
-    if (timer) clearInterval(timer);
-    timer = setInterval(nextSlide, 4000);
+  function arrancar() {
+    detener();
+    if (!pausado && !document.hidden) timer = setInterval(function () { ir(actual + 1); }, 6000);
   }
+  function detener() { if (timer) { clearInterval(timer); timer = null; } }
 
-  window.addEventListener("resize", updateCarousel);
+  controles.querySelector(".banners-ant").addEventListener("click", function () { ir(actual - 1); arrancar(); });
+  controles.querySelector(".banners-sig").addEventListener("click", function () { ir(actual + 1); arrancar(); });
+  btnPausa.addEventListener("click", function () { pausado = !pausado; marcar(); arrancar(); });
 
-  updateCarousel();
-  restart();
+  // Sincroniza el punto activo cuando el usuario desliza con el dedo
+  var espera;
+  pista.addEventListener("scroll", function () {
+    clearTimeout(espera);
+    espera = setTimeout(function () {
+      var i = Math.round(pista.scrollLeft / pista.clientWidth);
+      if (i !== actual) { actual = i; marcar(); }
+    }, 120);
+  }, { passive: true });
+
+  raiz.addEventListener("mouseenter", detener);
+  raiz.addEventListener("mouseleave", arrancar);
+  raiz.addEventListener("focusin", detener);
+  raiz.addEventListener("focusout", arrancar);
+  document.addEventListener("visibilitychange", function () { document.hidden ? detener() : arrancar(); });
+
+  marcar();
+  arrancar();
 })();
