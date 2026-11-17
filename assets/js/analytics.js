@@ -18,7 +18,7 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag("js", new Date());
-    window.gtag("config", ID, { cookie_domain: "auto" });
+    window.gtag("config", ID, { cookie_domain: "auto", allow_google_signals: false, allow_ad_personalization_signals: false });
   }
 
   function raizSitio() {
