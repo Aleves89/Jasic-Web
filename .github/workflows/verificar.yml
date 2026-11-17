@@ -1,0 +1,124 @@
+# Control automático del sitio (MAN-05).
+# Corre en cada Pull Request hacia main y en cada push a main.
+# Si encuentra un problema, el Pull Request muestra una cruz roja con el detalle.
+name: Verificar sitio
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Revisar enlaces, imágenes, etiquetas y sitemap
+        shell: python
+        run: |
+          import os, re, sys, xml.etree.ElementTree as ET
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from urllib.parse import unquote, urlparse
+
+          raiz = Path(".")
+          errores, avisos = [], []
+          VACIOS = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+          LIMITE_MB = 25  # tope por archivo de Cloudflare Pages; GitHub rechaza más de 100 MB
+
+          def existe_exacto(ruta):
+              """Existe con las mismas mayúsculas (GitHub Pages las distingue)."""
+              actual = Path(".")
+              for parte in ruta.parts:
+                  if parte in (".", ""):
+                      continue
+                  if not actual.is_dir() or parte not in os.listdir(actual):
+                      return False
+                  actual = actual / parte
+              return True
+
+          class Anidamiento(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.pila, self.mal = [], []
+              def handle_starttag(self, tag, attrs):
+                  if tag not in VACIOS:
+                      self.pila.append((tag, self.getpos()[0]))
+              def handle_endtag(self, tag):
+                  if tag in VACIOS:
+                      return
+                  if self.pila and self.pila[-1][0] == tag:
+                      self.pila.pop()
+                  else:
+                      abierta = self.pila[-1] if self.pila else None
+                      self.mal.append(f"</{tag}> en línea {self.getpos()[0]}"
+                                      + (f" (estaba abierta <{abierta[0]}> de la línea {abierta[1]})" if abierta else ""))
+
+          paginas = sorted(p for p in raiz.rglob("*.html") if ".git" not in p.parts)
+          for f in paginas:
+              t = f.read_text(encoding="utf-8")
+              sin_scripts = re.sub(r"<script\b.*?</script>", "<script></script>", t, flags=re.S)
+              sin_scripts = re.sub(r"<!--.*?-->", "", sin_scripts, flags=re.S)
+              a = Anidamiento()
+              a.feed(sin_scripts)
+              for m in a.mal[:3]:
+                  errores.append(f"{f}: etiqueta mal cerrada: {m}")
+              for tag, linea in a.pila[:3]:
+                  errores.append(f"{f}: <{tag}> de la línea {linea} sin cerrar")
+
+              refs = re.findall(r'(?:href|src|data-grande)="([^"]+)"', sin_scripts)
+              refs += [x.strip().split()[0] for s in re.findall(r'srcset="([^"]+)"', sin_scripts) for x in s.split(",") if x.strip()]
+              for r in refs:
+                  if r.startswith(("http:", "https:", "mailto:", "tel:", "#", "data:", "javascript:")):
+                      continue
+                  ruta = unquote(urlparse(r).path)
+                  if not ruta:
+                      continue
+                  destino = (raiz / ruta.lstrip("/")) if ruta.startswith("/") else (f.parent / ruta)
+                  destino = Path(os.path.normpath(destino))
+                  if ruta.endswith("/") or destino.is_dir():
+                      destino = destino / "index.html"
+                  if not existe_exacto(destino):
+                      errores.append(f"{f}: enlace o archivo inexistente: {r}")
+
+              if "<title>" not in t:
+                  errores.append(f"{f}: falta <title>")
+              if 'name="description"' not in t:
+                  avisos.append(f"{f}: falta meta description")
+              for tag in re.findall(r"<img\b[^>]*>", t):
+                  if " alt=" not in tag:
+                      errores.append(f"{f}: imagen sin alt: {tag[:90]}")
+
+          try:
+              ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+              locs = [e.text for e in ET.parse("sitemap.xml").getroot().findall("s:url/s:loc", ns)]
+              for loc in locs:
+                  ruta = unquote(urlparse(loc).path).lstrip("/") or "index.html"
+                  if not existe_exacto(Path(ruta)):
+                      errores.append(f"sitemap.xml: la página no existe: {loc}")
+          except Exception as e:
+              errores.append(f"sitemap.xml no es válido: {e}")
+
+          for p in raiz.rglob("*"):
+              if p.is_file() and ".git" not in p.parts:
+                  mb = p.stat().st_size / 1_048_576
+                  if mb > LIMITE_MB:
+                      errores.append(f"{p}: pesa {mb:.1f} MB (máximo {LIMITE_MB} MB)")
+                  if p.name in ("Thumbs.db", "desktop.ini", ".DS_Store") or p.suffix in (".py", ".xlsx", ".tmp"):
+                      errores.append(f"{p}: archivo interno que no debe publicarse")
+
+          print(f"{len(paginas)} páginas revisadas")
+          for a in avisos:
+              print("::warning::" + a)
+          for e in errores:
+              print("::error::" + e)
+          if errores:
+              print(f"\n{len(errores)} problema(s). Corregilos antes de hacer el merge.")
+              sys.exit(1)
+          print("Todo en orden.")
