@@ -100,7 +100,7 @@ jobs:
               locs = [e.text for e in ET.parse("sitemap.xml").getroot().findall("s:url/s:loc", ns)]
               for loc in locs:
                   ruta = unquote(urlparse(loc).path).lstrip("/") or "index.html"
-                  if not existe_exacto(Path(ruta)):
+                  if not existe_exacto(Path(ruta)) and not existe_exacto(Path(ruta + ".html")):
                       errores.append(f"sitemap.xml: la página no existe: {loc}")
           except Exception as e:
               errores.append(f"sitemap.xml no es válido: {e}")
