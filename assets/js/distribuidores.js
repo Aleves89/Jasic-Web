@@ -9,6 +9,9 @@
      - Búsqueda / filtros / tarjetas
    ========================================================= */
 
+(function () {
+"use strict";
+
 const TIPOS = {
   oficial:  "Distribuidor Oficial",
   venta:    "Punto de Venta",
@@ -67,6 +70,9 @@ const normalizar = (s) =>
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+/* Solo se aceptan direcciones https:// para web y redes (SEG-05) */
+const urlSegura = (u) => (/^https:\/\/[^\s"'<>]+$/i.test(String(u || "").trim()) ? String(u).trim() : "");
 
 /* tipo puede ser un texto ("venta") o una lista (["venta","servicio"]) */
 const tiposDe = (d) => (Array.isArray(d.tipo) ? d.tipo : [d.tipo]).filter(Boolean);
@@ -432,7 +438,7 @@ function render() {
   if (!items.length) {
     $list.innerHTML = `
       <div class="dc-empty">
-        <strong>No encontramos distribuidores con ese criterio</strong>
+        <strong>No encontramos puntos de venta con ese criterio</strong>
         Probá con otra localidad o provincia, o
         <a href="Contacto.html">escribinos</a> y te indicamos el punto de venta más cercano.
       </div>`;
@@ -441,15 +447,15 @@ function render() {
 
   $list.innerHTML = items.map(({ d, idx, km }, i) => {
     const wa = d.whatsapp
-      ? `<a class="dc-btn wa" href="https://wa.me/${esc(d.whatsapp)}?text=${encodeURIComponent("Hola, consulto por equipos JASIC.")}" target="_blank" rel="noopener">${ICON.wa} WhatsApp</a>`
+      ? `<a class="dc-btn wa" href="https://wa.me/${esc(String(d.whatsapp).replace(/\D/g, ""))}?text=${encodeURIComponent("Hola, consulto por equipos JASIC.")}" target="_blank" rel="noopener">${ICON.wa} WhatsApp</a>`
       : "";
     const social = [
-      d.web       && `<a href="${esc(d.web)}" target="_blank" rel="noopener" title="Sitio web">${ICON.web}</a>`,
-      d.instagram && `<a href="${esc(d.instagram)}" target="_blank" rel="noopener" title="Instagram">${ICON.ig}</a>`,
-      d.facebook  && `<a href="${esc(d.facebook)}" target="_blank" rel="noopener" title="Facebook">${ICON.fb}</a>`,
-      d.tiktok    && `<a href="${esc(d.tiktok)}" target="_blank" rel="noopener" title="TikTok">${ICON.tt}</a>`,
-      d.youtube   && `<a href="${esc(d.youtube)}" target="_blank" rel="noopener" title="YouTube">${ICON.yt}</a>`,
-      d.linkedin  && `<a href="${esc(d.linkedin)}" target="_blank" rel="noopener" title="LinkedIn">${ICON.li}</a>`
+      urlSegura(d.web)       && `<a href="${esc(urlSegura(d.web))}" target="_blank" rel="noopener" title="Sitio web" aria-label="Sitio web de ${esc(d.nombre)}">${ICON.web}</a>`,
+      urlSegura(d.instagram) && `<a href="${esc(urlSegura(d.instagram))}" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram de ${esc(d.nombre)}">${ICON.ig}</a>`,
+      urlSegura(d.facebook)  && `<a href="${esc(urlSegura(d.facebook))}" target="_blank" rel="noopener" title="Facebook" aria-label="Facebook de ${esc(d.nombre)}">${ICON.fb}</a>`,
+      urlSegura(d.tiktok)    && `<a href="${esc(urlSegura(d.tiktok))}" target="_blank" rel="noopener" title="TikTok" aria-label="TikTok de ${esc(d.nombre)}">${ICON.tt}</a>`,
+      urlSegura(d.youtube)   && `<a href="${esc(urlSegura(d.youtube))}" target="_blank" rel="noopener" title="YouTube" aria-label="YouTube de ${esc(d.nombre)}">${ICON.yt}</a>`,
+      urlSegura(d.linkedin)  && `<a href="${esc(urlSegura(d.linkedin))}" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn de ${esc(d.nombre)}">${ICON.li}</a>`
     ].filter(Boolean).join("");
     const dist = Number.isFinite(km)
       ? `<span class="dc-km">${i === 0 ? "El más cercano · " : ""}${fmtKm(km)}</span>`
@@ -472,6 +478,7 @@ function render() {
         <div class="dc-card-actions">
           ${wa}
           <a class="dc-btn ghost" href="${mapsLinkUrl(d)}" target="_blank" rel="noopener">${ICON.route} Cómo llegar</a>
+          ${tieneCoords(d) ? `<button type="button" class="dc-btn ghost dc-ver" data-idx="${idx}">${ICON.pin} Ver en el mapa</button>` : ""}
         </div>
       </article>`;
   }).join("");
@@ -510,3 +517,4 @@ function seleccionar(idx, { desdeMapa = false } = {}) {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+})();

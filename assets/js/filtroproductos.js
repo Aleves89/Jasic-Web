@@ -1,35 +1,31 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const buttons = document.querySelectorAll(".filter-btn");
-  const sections = document.querySelectorAll(".product-section");
+// Filtro del listado de productos (FUN-09, ACC-11)
+document.addEventListener("DOMContentLoaded", function () {
+  var botones = Array.prototype.slice.call(document.querySelectorAll(".filter-btn"));
+  var secciones = Array.prototype.slice.call(document.querySelectorAll(".product-section"));
+  if (!botones.length) return;
+  var validas = botones.map(function (b) { return b.dataset.filter; });
 
-  const params = new URLSearchParams(window.location.search);
-  const categoriaURL = params.get("categoria");
-
-  function aplicarFiltro(filtro) {
-    sections.forEach(section => {
-      if (filtro === "all" || section.dataset.category === filtro) {
-        section.style.display = "block";
-      } else {
-        section.style.display = "none";
-      }
+  function aplicar(filtro, actualizarURL) {
+    if (validas.indexOf(filtro) === -1) filtro = "all";
+    secciones.forEach(function (s) {
+      s.hidden = !(filtro === "all" || s.dataset.category === filtro);
     });
-
-    buttons.forEach(btn => {
-      btn.classList.toggle("active", btn.dataset.filter === filtro);
+    botones.forEach(function (b) {
+      var activo = b.dataset.filter === filtro;
+      b.classList.toggle("active", activo);
+      b.setAttribute("aria-pressed", activo ? "true" : "false");
     });
+    if (actualizarURL && window.history.replaceState) {
+      var url = new URL(window.location.href);
+      if (filtro === "all") url.searchParams.delete("categoria");
+      else url.searchParams.set("categoria", filtro);
+      window.history.replaceState(null, "", url);
+    }
   }
 
-  // Click manual
-  buttons.forEach(button => {
-    button.addEventListener("click", () => {
-      aplicarFiltro(button.dataset.filter);
-    });
+  botones.forEach(function (b) {
+    b.addEventListener("click", function () { aplicar(b.dataset.filter, true); });
   });
 
-  // Filtro automático desde URL
-  if (categoriaURL) {
-    aplicarFiltro(categoriaURL);
-  } else {
-    aplicarFiltro("all");
-  }
+  aplicar(new URLSearchParams(window.location.search).get("categoria") || "all", false);
 });

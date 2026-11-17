@@ -34,6 +34,7 @@
   /* ---------- Utilidades ---------- */
   const $ = (id) => document.getElementById(id);
   const normalizar = (s) => (s || "").toString().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const urlSegura = (u) => (/^https:\/\/[^\s"'<>]+$/i.test(String(u || "").trim()) ? String(u).trim() : "");
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const tieneCoords = (d) => Number.isFinite(d.lat) && Number.isFinite(d.lng);
   const enArgentina = (lat, lng) => Number.isFinite(lat) && Number.isFinite(lng) && lat <= -21.7 && lat >= -55.2 && lng >= -73.7 && lng <= -53.5;
@@ -188,10 +189,10 @@
     if (p.telefono)  filas.push(`<li>${ICO.tel}<a href="${telHref(p.telefono)}">${esc(p.telefono)}</a></li>`);
     if (p.horario)   filas.push(`<li>${ICO.reloj}<span>${esc(p.horario)}</span></li>`);
     const redes = [
-      p.web && `<a href="${esc(p.web)}" target="_blank" rel="noopener">${esc(dominio(p.web))}</a>`,
-      p.instagram && `<a href="${esc(p.instagram)}" target="_blank" rel="noopener">Instagram</a>`,
-      p.facebook && `<a href="${esc(p.facebook)}" target="_blank" rel="noopener">Facebook</a>`,
-      p.tiktok && `<a href="${esc(p.tiktok)}" target="_blank" rel="noopener">TikTok</a>`
+      urlSegura(p.web) && `<a href="${esc(urlSegura(p.web))}" target="_blank" rel="noopener">${esc(dominio(p.web))}</a>`,
+      urlSegura(p.instagram) && `<a href="${esc(urlSegura(p.instagram))}" target="_blank" rel="noopener">Instagram</a>`,
+      urlSegura(p.facebook) && `<a href="${esc(urlSegura(p.facebook))}" target="_blank" rel="noopener">Facebook</a>`,
+      urlSegura(p.tiktok) && `<a href="${esc(urlSegura(p.tiktok))}" target="_blank" rel="noopener">TikTok</a>`
     ].filter(Boolean);
     if (redes.length) filas.push(`<li>${ICO.web}<span class="dx-redes">${redes.join("")}</span></li>`);
     return `<ul class="dx-datos">${filas.join("")}</ul>`;
