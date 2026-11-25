@@ -32,6 +32,22 @@ const DISTRIBUIDORES = [
     lat: -34.7392937, lng: -58.2760194
   },
   {
+    nombre: "FC Insumos y Servicios Industriales",
+    tipo: "venta",
+    ciudad: "Quilmes",
+    provincia: "Buenos Aires",
+    direccion: "Av. La Plata 1919, Quilmes",
+    telefono: "+54 11 5365-7004",
+    whatsapp: "5491136796023",
+    horario: "Lunes a Viernes · 8:00 – 17:00 · Sábados 8:00 – 13:00",
+    web: "",
+    instagram: "https://www.instagram.com/fc_insumosindustriales",
+    facebook: "",
+    tiktok: "https://www.tiktok.com/@buloneradelsuryfcinsumos",
+    mapsQuery: "FC Insumos y Servicios Industriales, Av. La Plata 1919, Quilmes",
+    lat: -34.7392525, lng: -58.2759137
+  },
+  {
     nombre: "Soldaduras Tigre",
     tipo: "venta",
     ciudad: "Tigre",
