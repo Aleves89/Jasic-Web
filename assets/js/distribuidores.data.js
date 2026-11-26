@@ -258,5 +258,21 @@ const DISTRIBUIDORES = [
     tiktok: "",
     mapsQuery: "FDS Gases Industriales, Confluencia 1479, Cipolletti",
     lat: -38.9248454, lng: -67.9724278
+  },
+  {
+    nombre: "Gases MDP",
+    tipo: "venta",
+    ciudad: "Mar del Plata",
+    provincia: "Buenos Aires",
+    direccion: "Fitte 250, Mar del Plata",
+    telefono: "(0223) 465-0526",
+    whatsapp: "5492235359346",
+    horario: "Lunes a Viernes · 8:00 – 17:30 · Sábados 8:00 – 13:00",
+    web: "https://www.gasesmdpsrl.com/",
+    instagram: "",
+    facebook: "",
+    tiktok: "",
+    mapsQuery: "Gases MDP, Fitte 250, Mar del Plata",
+    lat: -38.0003466, lng: -57.6008106
   }
 ];
